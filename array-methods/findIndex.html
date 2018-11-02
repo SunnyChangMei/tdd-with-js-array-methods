@@ -1,0 +1,138 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.findindex
+
+// Description:
+  // Returns the index of the first element in the array that satisfies the provided testing function.
+  // Otherwise, it returns -1, indicating no element passed the test.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write test to fail
+  // 4 write code to make the test pass
+  // 5 rinse and repeat
+
+// Function Signature:
+  // findIndex(array, callback[, opitonalThis])
+
+
+// Callback Parameters:
+  // currentValue
+  // currentIndex
+  // array
+
+
+// Return Value:
+  // An index in the array if an element passes the test; otherwise, -1.
+
+
+// Requirements:
+  // It should run the callback function originalArray.length number of times.
+  // It should accept currentValue as the first argument to the callback.
+  // It should accept currentIndex as the second argument to the callback.
+  // It should accept originalArray as the third argument to the callback.
+  // It should accept an optionalThis.
+  // It should not skip holes.
+  // If currentValue passed to callback returns a truthy value, return currentIndex.
+  // If currentValue passed to callback does not return a truthy value, return -1.
+  // If originalArray.length is 0, return -1.
+  // If an element is added to originalArray after function has been called, do not run this element through callback.
+  // If an existing, unvisited element of originalArray is changed by callback, currentValue passed to callback is its value at time function visits currentValue.
+  // It should run the callback on deleted elements.
+
+// This is where the function will go.
+function findIndex(array, callback, optionalThis){
+  var findIndexCallback = callback;
+
+  if (optionalThis){
+    findIndexCallback = callback.bind(optionalThis);
+  }
+
+  for (var i = 0; i < array.length; i++) {
+    if (findIndexCallback(array[i], i, array)) {
+      return i;
+    };
+  }
+    return -1;
+}
+
+
+// This is where the tests will go.
+tests({
+
+  '1. It should run the callback function originalArray.length number of times.': function() {
+    var numberOfTimesCallbackHasRun = 0;
+    var originalArray = [1,2,3];
+    findIndex(originalArray, function(){
+      numberOfTimesCallbackHasRun++
+    });
+    eq(numberOfTimesCallbackHasRun, 3);
+  },
+  '2. It should accept currentValue as the first argument to the callback.': function() {
+    findIndex([1], function(currentValue){
+      eq(currentValue, 1);
+    });
+  },
+  '3. It should accept currentIndex as the second argument to the callback.': function() {
+    findIndex([1], function(currentValue, currentIndex){
+      eq(currentIndex, 0);
+    });
+  },
+  '4. It should accept originalArray as the third argument to the callback.': function() {
+    var testArray = [1,2,3];
+    findIndex(testArray, function(currentValue, currentIndex, originalArray){
+      eq(originalArray, testArray);
+    });
+  },
+  '5. It should accept an optionalThis.': function() {
+    findIndex([1], function(){
+      eq(this.thisArg, "I am an optionalThis.")
+    },{thisArg: "I am an optionalThis."})
+  },
+  '6. It should not skip holes.': function() {
+    var numberOfTimesCallbackHasRun = 0;
+    var array = [1,,2,,3];
+    findIndex(array, function(){
+      numberOfTimesCallbackHasRun++;
+    })
+    eq(numberOfTimesCallbackHasRun, array.length);
+  },
+  '7. If currentValue passed to callback returns a truthy value, return currentIndex.': function() {
+    var returnValueOfFind = findIndex([1,2,3], function(currentValue, currentIndex){
+      return currentValue === 3;
+    });
+    eq(returnValueOfFind, 2);
+  },
+  '8. If currentValue passed to callback does not return a truthy value, return -1.': function() {
+    var returnValueOfFind = findIndex([1,2,3], function(currentValue, currentIndex){
+      return currentValue > 3;
+    });
+    eq(returnValueOfFind, -1);
+  },
+  '9. If originalArray.length is 0, return -1.': function() {
+    var returnValueOfFind = findIndex([], function(currentValue, currentIndex){
+      return -1;
+    });
+    eq(returnValueOfFind, -1);
+  },
+  '10. It should run the callback on deleted elements.': function() {
+    var array = [1,2,3];
+    var numberOfTimesCallbackHasRun = 0;
+    findIndex(array, function(currentValue, currentIndex){
+      numberOfTimesCallbackHasRun++;
+      if (array[2]) {
+        delete array[2];
+      }
+    });
+    eq(numberOfTimesCallbackHasRun, array.length);
+  }
+});
+
+</script>

@@ -1,0 +1,47 @@
+<script src="../simpletest.js"></script>
+<script>
+
+
+function forEach(array, callback, optionalThisObject) {
+  var forEachCallback = callback
+  if (optionalThisObject) {
+    forEachCallback = callback.bind(optionalThisObject);
+  }
+  for (var i = 0; i < array.length; i++) {
+    forEachCallback(array[i], i, array);
+  }
+}
+
+tests({
+
+  'It should run the callback function array.length number of times': function() {
+    var counter = 0
+    forEach([1,2,3], function() {
+      counter++;
+    });
+    eq(counter, 3);
+  },
+  'It should pass in the ith element as the first argument to the callback': function() {
+    forEach([1], function(number) {
+      eq(number, 1);
+    });
+  },
+  'It should pass in the ith position as the second argument to the callback.': function() {
+    forEach([1], function(number, index) {
+      eq(index, 0);
+    });
+  },
+  'It should pass in the original array as the third argument to the callback.': function() {
+    var testArray = [1,2,3];
+    forEach(testArray, function(number, index, originalArray) {
+      eq(originalArray, testArray);
+    });
+  },
+  'It should accept a configurable this object': function() {
+    forEach([1], function() {
+      eq(this.description, "This is an optional this object.")
+    }, {description: "This is an optional this object."})
+  },
+
+});
+</script>
