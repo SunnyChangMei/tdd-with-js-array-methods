@@ -19,7 +19,8 @@ You can add the debugger to any test to take a step by step look at the code.
 For example, to add debugger to the first test of my findIndex method:
 
 1. Open *forIndex.html* in your editor
-2. Insert a new line after line 70 and paste in `debugger;`
+2. Insert a new line after line 70 and paste in `debugger;` (example below)
+3. Open the file in your browser and open Inspect and Console as described above
 
 ```
 '1. It should run the callback function originalArray.length number of times.': function() {
@@ -32,6 +33,8 @@ For example, to add debugger to the first test of my findIndex method:
   eq(numberOfTimesCallbackHasRun, 3);
 },
 ```
+
+
 
 ### Methods to Test
 
