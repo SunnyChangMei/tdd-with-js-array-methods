@@ -1,0 +1,58 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
+
+// Specs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every#Specifications
+
+// Description:
+  // The every() method tests whether all elements in the array pass the test implemented by the provided function.
+
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write simplest test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // every(array, callback(currentValue, currentIndex, originalArray)[, thisArg])
+
+
+// Callback Parameters:
+  // currentValue
+  // currentIndex
+  // originalArray
+
+
+// Return Value:
+  // true if the callback function returns a truthy value for every array element; otherwise, false.
+
+
+
+// Requirements:
+  // It should pass currentValue as the first argument to the callback.
+  // It should pass currentIndex as the second argument to the calblack.
+  // It should pass originalArray as the third argument to the callback.
+  // If a thisArg is provided, it should be used as the callback's this value.
+  // It should execute the callback array.length times until it finds one where callback returns a falsy value and then the function returns false.
+  // It should execute the callback array.length times and if all values return truthy, then the function returns true.
+  // It should not execute the callback on unassigned array indexes. (It should skip holes.)
+  // It should not execute the callback on values added to originalArray after the call to every begins.
+  // If an existing element of originalArray is changed, its value as passed to callback should be the value at the time every visits it.
+  // It should not execute the callback on indexes of originalArray that have been deleted.
+  // It should not mutate the originalArray.
+  // If originalArray is empty it should return true.
+
+
+
+// This is where the function will go.
+
+
+// This is where the tests will go.
+
+</script>
