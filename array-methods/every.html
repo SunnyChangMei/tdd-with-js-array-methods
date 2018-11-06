@@ -44,10 +44,8 @@
   // It should return false if the callback returns falsy for any value in the array.
   // It should not execute the callback on unassigned array indexes. (It should skip holes.)
   // It should skip a hole at position array[0].
-  // It should not execute the callback on values added to originalArray after the call to every begins.
-  // If an existing element of originalArray is changed, its value as passed to callback should be the value at the time every visits it.
-  // It should not execute the callback on indexes of originalArray that have been deleted.
-  // It should not mutate the originalArray.
+  // It should skip a hole at last position of array.
+
 
 
 
