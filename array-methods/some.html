@@ -1,0 +1,135 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.17
+
+
+// Description:
+  // The some() method tests whether at least one element in the array passes the test implemented by the provided function.
+
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write simplest test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // some(originalArray, callback(currentValue, currentIndex, originalArray)[,thisArg]);
+
+
+// Callback Parameters:
+  // currentValue
+  // currentIndex
+  // originalArray
+
+
+// Return Value:
+  // Returns true if the callback function returns a truthy value for any array element; otherwise, false.
+
+
+// Requirements:
+  // It should pass currentValue as the first argument to the callback.
+  // It should pass currentIndex as the second argument to the callback.
+  // It should pass originalArray as the third argument to the callback.
+  // If a thisArg is provided, it should be used as the this value for the callback.
+  // It should skip holes.
+  // It should return true if any currentValue passed to callback returns a truthy value.
+  // It should return false if none of currentValue passed to callback returns a truthy value.
+  // It should not mutate the originalArray
+
+
+// This is where the function will go.
+
+function some(array, callback, thisArg){
+  var someCallback = callback;
+
+  if (thisArg) {
+    someCallback = callback.bind(thisArg)
+  }
+
+  for (var i = 0; i < array.length; i++){
+    if (i in array) {
+      if (someCallback(array[i], i, array)){
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+// This is where the tests will go.
+
+tests ({
+
+  'It should pass currentValue as the first argument to the callback.': function(){
+    var array = [1];
+    some(array, function(currentValue){
+      eq(currentValue, 1);
+    });
+  },
+
+  'It should pass currentIndex as the second argument to the callback.': function(){
+    var array = [1];
+    some(array, function(currentValue, currentIndex){
+      eq(currentIndex, 0);
+    });
+  },
+
+  'It should pass originalArray as the third argument to the callback.': function(){
+    var testArray = [1];
+    some(testArray, function(currentValue, currentIndex, originalArray){
+      eq(originalArray, testArray);
+    });
+  },
+
+  'If a thisArg is provided, it should be used as the this value for the callback.': function(){
+    some([1], function(){
+      eq(this.description, "This is an optional this.");
+    },{description: "This is an optional this."});
+  },
+
+  'It should skip holes.': function(){
+    var numberOfTimesCallbackHasRun = 0;
+    some([,1, , 3,,], function(currentValue){
+      numberOfTimesCallbackHasRun++;
+    });
+    eq(numberOfTimesCallbackHasRun, 2);
+  },
+
+  'It should return true if any currentValue passed to callback returns a truthy value.': function(){
+    var returnValueOfSome = some([1,2,3], function(currentValue){
+      return currentValue === 3;
+    });
+    eq(returnValueOfSome, true);
+  },
+
+  'It should return false if none of currentValue passed to callback returns a truthy value.': function(){
+    var returnValueOfSome = some([1,2,3], function(currentValue){
+      return currentValue === 4;
+    });
+    eq(returnValueOfSome, false);
+  },
+
+  'It should not mutate the originalArray.': function(){
+    var originalArray = [1,2,3];
+    var returnValueOfSome = some(originalArray, function(currentValue){
+      return currentValue === 3;
+    });
+    eq(originalArray[0], 1);
+    eq(originalArray[1], 2);
+    eq(originalArray[2], 3);
+    eq(originalArray[3], undefined);
+    eq(originalArray.length, 3);
+  }
+
+
+});
+
+</script>
