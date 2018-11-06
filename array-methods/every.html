@@ -52,35 +52,26 @@
 // This is where the function will go.
 
 function every(array, callback, thisArg){
+  
   if (array.length === 0) {
     return true;
   }
+
   var everyCallback = callback;
 
   if (thisArg){
     everyCallback = callback.bind(thisArg);
   }
 
-
   var numberOfTimesCallbackHasRun = 0;
   for(var i = 0; i < array.length; i++){
-    if(i in array === false){
-      numberOfTimesCallbackHasRun++;
-      i++;
-    }
-
-
-    if (everyCallback(array[i], i, array) && numberOfTimesCallbackHasRun === array.length-1){
-      return true;
-    } else if (everyCallback(array[i], i, array) && numberOfTimesCallbackHasRun < array.length-1){
-      numberOfTimesCallbackHasRun++;
-      continue;
-      // return true;
-    } else {
-      numberOfTimesCallbackHasRun++;
-      return false;
+    if(i in array){
+      if (everyCallback(array[i], i, array) === false){
+        return false;
+      }
     }
   }
+  return true;
 }
 
 // This is where the tests will go.
@@ -137,26 +128,28 @@ tests({
 },
 
 'It should not execute the callback on unassigned array indexes. (It should skip holes.)': function(){
-  var returnValueOfEvery = every([1,,2,,3], function(currentValue, currentIndex){
-    return currentValue < 6;
+  var numberOfTimesCallbackHasRun = 0;
+  every([1,,2,,3], function(){
+    numberOfTimesCallbackHasRun++;
   });
-  eq(returnValueOfEvery, true);
+  eq(numberOfTimesCallbackHasRun, 3);
 },
 
 'It should skip a hole at position array[0].': function(){
-  var returnValueOfEvery = every([,2,3], function(currentValue, currentIndex){
-    return currentValue < 4;
+  var numberOfTimesCallbackHasRun = 0;
+  every([,2,3], function(){
+    numberOfTimesCallbackHasRun++;
   });
-  eq(returnValueOfEvery, true);
+  eq(numberOfTimesCallbackHasRun, 2);
 },
 
 'It should skip a hole at last position of array.': function(){
-  var returnValueOfEvery = every([1,2,3,], function(currentValue, currentIndex){
-    return currentValue < 4;
+  var numberOfTimesCallbackHasRun = 0;
+  every([1,2,3,], function(){
+    numberOfTimesCallbackHasRun++;
   });
-  eq(returnValueOfEvery, true);
+  eq(numberOfTimesCallbackHasRun, 3);
 }
-
 
 });
 
