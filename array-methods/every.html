@@ -36,23 +36,130 @@
 
 // Requirements:
   // It should pass currentValue as the first argument to the callback.
-  // It should pass currentIndex as the second argument to the calblack.
+  // It should pass currentIndex as the second argument to the callback.
   // It should pass originalArray as the third argument to the callback.
   // If a thisArg is provided, it should be used as the callback's this value.
-  // It should execute the callback array.length times until it finds one where callback returns a falsy value and then the function returns false.
-  // It should execute the callback array.length times and if all values return truthy, then the function returns true.
+  // If originalArray is empty it should return true.
+  // It should return true if the callback returns true for all values of the array.
+  // It should return false if the callback returns falsy for any value in the array.
   // It should not execute the callback on unassigned array indexes. (It should skip holes.)
+  // It should skip a hole at position array[0].
   // It should not execute the callback on values added to originalArray after the call to every begins.
   // If an existing element of originalArray is changed, its value as passed to callback should be the value at the time every visits it.
   // It should not execute the callback on indexes of originalArray that have been deleted.
   // It should not mutate the originalArray.
-  // If originalArray is empty it should return true.
 
 
 
 // This is where the function will go.
 
+function every(array, callback, thisArg){
+  if (array.length === 0) {
+    return true;
+  }
+  var everyCallback = callback;
+
+  if (thisArg){
+    everyCallback = callback.bind(thisArg);
+  }
+
+
+  var numberOfTimesCallbackHasRun = 0;
+  for(var i = 0; i < array.length; i++){
+    if(i in array === false){
+      numberOfTimesCallbackHasRun++;
+      i++;
+    }
+
+
+    if (everyCallback(array[i], i, array) && numberOfTimesCallbackHasRun === array.length-1){
+      return true;
+    } else if (everyCallback(array[i], i, array) && numberOfTimesCallbackHasRun < array.length-1){
+      numberOfTimesCallbackHasRun++;
+      continue;
+      // return true;
+    } else {
+      numberOfTimesCallbackHasRun++;
+      return false;
+    }
+  }
+}
 
 // This is where the tests will go.
+
+tests({
+
+'It should pass currentValue as the first argument to the callback.': function(){
+  var array = [1];
+  every(array, function(currentValue){
+    eq(currentValue, 1);
+  });
+},
+
+'It should pass currentIndex as the second argument to the callback.': function(){
+  var array = [1];
+  every(array, function(currentValue, currentIndex){
+    eq(currentIndex, 0);
+  });
+},
+
+'It should pass originalArray as the third argument to the callback.': function(){
+  var testArray = [1,2,3];
+  every(testArray, function(currentValue, currentIndex, originalArray){
+    eq(originalArray, testArray);
+  });
+},
+
+'If a thisArg is provided, it should be used as the this value of the callback': function(){
+  every([1,2], function(){
+    eq(this.description, "This is an optional this.");
+  },{description: "This is an optional this."});
+},
+
+'If originalArray is empty it should return true.': function(){
+  var originalArray = [];
+  var returnValueOfEvery = every(originalArray, function(currentValue, currentIndex){
+    return true;
+  });
+  eq(returnValueOfEvery, true);
+},
+
+'It should return true if the callback returns true for all values of the array.': function(){
+  var returnValueOfEvery = every([1,2,3], function(currentValue, currentIndex){
+    return currentValue < 4;
+  });
+  eq(returnValueOfEvery, true);
+},
+
+'It should return false if the callback returns falsy for any value in the array.': function(){
+  var returnValueOfEvery = every([1,2,3], function(currentValue, currentIndex){
+    return currentValue === 1;
+  });
+  eq(returnValueOfEvery, false);
+},
+
+'It should not execute the callback on unassigned array indexes. (It should skip holes.)': function(){
+  var returnValueOfEvery = every([1,,2,,3], function(currentValue, currentIndex){
+    return currentValue < 6;
+  });
+  eq(returnValueOfEvery, true);
+},
+
+'It should skip a hole at position array[0].': function(){
+  var returnValueOfEvery = every([,2,3], function(currentValue, currentIndex){
+    return currentValue < 4;
+  });
+  eq(returnValueOfEvery, true);
+},
+
+'It should skip a hole at last position of array.': function(){
+  var returnValueOfEvery = every([1,2,3,], function(currentValue, currentIndex){
+    return currentValue < 4;
+  });
+  eq(returnValueOfEvery, true);
+}
+
+
+});
 
 </script>
