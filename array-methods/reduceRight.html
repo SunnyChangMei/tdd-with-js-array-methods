@@ -1,0 +1,91 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.22
+
+// Description:
+  // The reduceRight() method applies a function against an accumulator
+  // and each value of the array (from right-to-left) to reduce it to a single value.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write simplest test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // reduceRight(array, callback(accumulator, currentValue[, currentIndex, originalArray])[,initialValue]);
+
+
+// Callback Parameters:
+  // accumulator
+  // currentValue
+  // currentIndex
+  // originalArray
+
+
+// Return Value:
+  // The value that results from the reduction.
+
+
+// Requirements:
+  // It should execute the callback once for each element present in the array.
+  // It should not execute the callback on unassigned indexes. (holes)
+  // It should pass accumulator as the first argument to the callback.
+  // It should pass currentValue as the second argument to the callback.
+  // It should pass currentIndex as the third argument to the callback.
+  // It should pass originalArray as the fourth argument to the callback.
+  // If numberOfTimesCallbackHasRun === 0 && initialValue !== undefined,
+    // then accumulator === initialValue and currentValue === array.length-1
+  // If numberOfTimesCallbackHasRun === 0 && initialValue === undefined,
+    // then accumulator === array.length-1 and currentValue === array.length-2
+  // If array.length === 0 && initialValue === undefined, then TypeError should be thrown.
+  // If array.length === 1 && initialValue === undefined, then the solo value should be returned without calling callback.
+  // If initialValue !== undefined && array.length === 0, then the solo value should be returned without calling callback.
+
+// This is where the function will go.
+
+function reduceRight(array, callback){
+  for (var i = 0; i < array.length; i++){
+    if(i in array) {
+      callback();
+    }
+  }
+}
+
+// This is where the tests will go.
+
+tests ({
+
+  'It should execute the callback once for each element present in the array.':function(){
+    var array = [1,2,3];
+    var numberOfTimesCallbackHasRun = 0;
+    reduceRight(array, function(){
+      numberOfTimesCallbackHasRun++;
+    });
+    eq(numberOfTimesCallbackHasRun, 3);
+  },
+  'It should not execute the callback on unassigned indexes.':function(){
+    var array = [1,,3];
+    var numberOfTimesCallbackHasRun = 0;
+    reduceRight(array, function(){
+      numberOfTimesCallbackHasRun++;
+    });
+    eq(numberOfTimesCallbackHasRun, 2);
+  },
+  'It should pass accumulator as the first argument to the callback.':function(){
+    var accumulator = 0;
+    reduceRight([1,2,3], function(accumulator){
+      eq(accumulator, 0);
+    });
+  }
+
+});
+
+</script>
