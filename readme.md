@@ -48,7 +48,7 @@ For example, to add debugger to the first test of my findIndex method:
 - [x] Array.prototype.findIndex()
 - [x] Array.prototype.every()
 - [x] Array.prototype.some()
-- [ ] Array.prototype.reduceRight()
+- [x] Array.prototype.reduceRight()
 
 #### Accessors:
 
