@@ -2,36 +2,174 @@
 <script>
 
 // Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat
 
 // Specs:
+  // https://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.4
 
 // Description:
-
+  // The concat() method is used to merge two or more arrays.
+  // This method does not change the existing arrays, but instead returns a new array.
 
 
 // The Steps
   // 1 write requirements based on docs
   // 2 write description for test
-  // 3 write simplest test to fail
+  // 3 write test to fail
   // 4 write code to make the test pass
   // 5 repeat
 
 // Function Signature:
 
-
-// Callback Parameters:
-
-
+  // concat(originalArray[, valueN]);
 
 // Return Value:
+  // A new Array instance.
 
 
 // Requirements:
 
+  // what does this mean? returns a shallow copy
+
+  // It should accept originalArray as the first argument.
+  // It should accept valueN as an array for the second argument.
+  // It should accept valueN as a number.
+  // It should accept valueN as a boolean.
+  // It should accept valueN as a string.
+  // It should accept valueN as undefined.
+  // It should accept valueN as an object.
+  // It should return a new array.
+  // If valueN is a number, it should copy the value of the number into the new array.
+  // If valueN is a string, it should copy the value of the string into the new array.
+  // If valueN is an array, it should copy an object reference into the new array.
+  // It should not modify originalArray.
+  // It should not modify valueN.
+
+
+
+
+  // If a referenced object is modified, the changes should be visible to both the new and original arrays.
+
+
+
+  // It should accept one element for valueN.
+  // It should accept multiple elements for valueN.
+  // It should add elements of valueN in the order in which they are provided as arguments.
+  // It should not recurse into nested array arguments.
+
 
 // This is where the function will go.
 
+function concat(array, valueN){
+  var newArray = [];
+  newArray.push(array);
+  newArray.push(valueN);
+  return newArray;
+};
 
 // This is where the tests will go.
+
+tests({
+
+  'It should accept originalArray as the first argument.': function(){
+    var originalArray = [1];
+    concat(originalArray);
+    eq(Array.isArray(originalArray), true);
+  },
+
+  'It should accept valueN as an array for the second argument.': function(){
+    var valueN = [2];
+    concat([1], valueN);
+    eq(Array.isArray(valueN), true);
+  },
+
+  'It should accept valueN as a number.': function(){
+    var valueN = 1;
+    concat([2], valueN);
+    eq(typeof valueN, "number");
+  },
+
+  'It should accept valueN as a boolean.': function(){
+    var valueN = true;
+    concat([2], valueN);
+    eq(typeof valueN, "boolean");
+  },
+
+  'It should accept valueN as a string.': function(){
+    var valueN = "hello";
+    concat([1], valueN);
+    eq(typeof valueN, "string");
+  },
+
+  'It should accept valueN as undefined.': function(){
+    var valueN = undefined;
+    concat([1], valueN);
+    eq(typeof valueN, "undefined");
+  },
+
+  'It should accept valueN as an object': function(){
+    var valueN = {
+      firstName:"Nolan",
+      lastName:"Neeley",
+      location:"Chicago"
+    };
+    concat([1], valueN);
+    eq(typeof valueN, "object");
+  },
+
+  'It should return a new array.': function(){
+    var array = [1];
+    var returnValueOfConcat = concat(array);
+    eq(Array.isArray(returnValueOfConcat), true);
+  },
+
+  'If valueN is a number, it should copy the value of the number into the new array.': function(){
+    var originalArray = [1];
+    var valueN = 2;
+    var returnValueOfConcat = concat(originalArray, valueN);
+    eq(typeof valueN, "number");
+    eq(returnValueOfConcat[0], 1);
+    eq(returnValueOfConcat[1], 2);
+  },
+
+  'If valueN is a string, it should copy the value of the string into the new array.': function(){
+    var originalArray = [1];
+    var valueN = "hello";
+    var returnValueOfConcat = concat(originalArray, valueN);
+    eq(typeof valueN, "string");
+    eq(returnValueOfConcat[0], 1);
+    eq(returnValueOfConcat[1], "hello");
+  },
+
+  'If valueN is a boolean, it should copy the value of the boolean into the new array.': function(){
+    var originalArray = [1];
+    var valueN = true;
+    var returnValueOfConcat = concat(originalArray, valueN);
+    eq(typeof valueN, "boolean");
+    eq(returnValueOfConcat[0], 1);
+    eq(returnValueOfConcat[1], true);
+  },
+
+  'It should not modify originalArray.': function(){
+    var originalArray = [1];
+    var valueN = 2;
+    concat(originalArray, valueN);
+    eq(originalArray[0], 1);
+    eq(originalArray[1], undefined);
+  },
+
+  'It should not modify valueN.': function(){
+    var originalArray = [1];
+    var valueN = [2];
+    concat(originalArray, valueN);
+    eq(valueN[0], 2);
+    eq(valueN[1], undefined);
+  },
+
+  'If a referenced object is modified, the changes should be visible to both the new and original arrays.': function(){
+    fail();
+  },
+
+});
 
 </script>
