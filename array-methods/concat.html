@@ -44,26 +44,25 @@
   // If valueN is an array, it should copy an object reference into the new array.
   // It should not modify originalArray.
   // It should not modify valueN.
-
-
-
-
   // If a referenced object is modified, the changes should be visible to both the new and original arrays.
-
-
-
-  // It should accept one element for valueN.
   // It should accept multiple elements for valueN.
   // It should add elements of valueN in the order in which they are provided as arguments.
+
   // It should not recurse into nested array arguments.
+
+// New Things I Learned:
+  // rest parameters for representing an indefinite number of arguments as an array
+  // using typeOf and Array.isArray to write tests
 
 
 // This is where the function will go.
 
-function concat(array, valueN){
+function concat(array, ...valueN){
   var newArray = [];
   newArray.push(array);
-  newArray.push(valueN);
+  valueN.forEach(function(value) {
+    newArray.push(value);
+  });
   return newArray;
 };
 
@@ -167,8 +166,34 @@ tests({
   },
 
   'If a referenced object is modified, the changes should be visible to both the new and original arrays.': function(){
-    fail();
+    var originalArray = [1];
+    var valueN = {
+      firstName:"Nolan",
+      lastName:"Neeley",
+      location:"Chicago"
+    };
+    var returnValueOfConcat = concat(originalArray, valueN);
+    valueN.location = "Evansville";
+    eq(valueN.location, "Evansville");
+    eq(returnValueOfConcat[1].location, "Evansville");
   },
+
+  'It should accept multiple elements for valueN.': function(){
+    var valueN1 = [1];
+    var valueN2 = [2];
+    var returnValueOfConcat = concat([0], valueN1, valueN2);
+    eq(returnValueOfConcat[0], 0);
+    eq(returnValueOfConcat[1], 1);
+    eq(returnValueOfConcat[2], 2);
+  },
+
+  'It should add elements of valueN in the order in which they are provided as arguments.': function(){
+    var valueN1 = [1];
+    var valueN2 = [2];
+    returnValueOfConcat = concat([0], valueN2, valueN1);
+    eq(returnValueOfConcat[1], 2);
+    eq(returnValueOfConcat[2], 1);
+  }
 
 });
 

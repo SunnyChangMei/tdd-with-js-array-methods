@@ -52,7 +52,7 @@ For example, to add debugger to the first test of my findIndex method:
 
 #### Accessors:
 
-- [ ] Array.prototype.concat()
+- [x] Array.prototype.concat()
 - [ ] Array.prototype.indexOf()
 - [ ] Array.prototype.lastIndexOf()
 - [ ] Array.prototype.includes()
