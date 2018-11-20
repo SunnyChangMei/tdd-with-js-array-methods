@@ -40,27 +40,117 @@
 
 // Requirements:
   // It should be a type of function.
-  // It should accept originalArray as an array as its first argument.
-  // It should accept searchElement as a string for its second argument.
-  // It should accept searchElement as a number for its second argument.
-  // It should accept searchElement as a boolean for its second argument.
-  // It should accept searchElement as an array for its second argument.
-  // It should accept fromIndex as a number as the third and optional argument.
   // It should return the index of the last element that matches searchElement.
   // It should return -1 if no matches are found.
-  // If fromIndex is provided, it should begin the search at this index.
-  // If fromIndex is array.length-1, then the whole array should be searched.
-  // If fromIndex is greater than or equal to array.length, the whole array should be searched.
   // If fromIndex is not provided, it should default to array.length-1
-  // If fromIndex is a negative number, it should be taken as the offset from the end of the array.
-  // If fromIndex is a negative number, the array should still be searched from back to front.
+  // If fromIndex is array.length-1, then the whole array should be searched.
+  // If fromIndex is provided, it should begin the search at this index.
+  // If fromIndex is greater than or equal to array.length, the whole array should be searched.
   // If fromIndex is less than 0, -1 is returned - (array will not be searched).
   // It should skip unassigned indices.
+
+  // If fromIndex is a negative number, it should be taken as the offset from the end of the array.
+
 
 
 // This is where the function will go.
 
+  function lastIndexOf(array, searchElement, fromIndex){
+
+    if (fromIndex === undefined) {
+      fromIndex = array.length-1;
+    } else {
+      fromIndex = fromIndex;
+    }
+
+    if (fromIndex < 0) {
+      fromIndex = array.length +(fromIndex)
+    }
+
+    for (fromIndex; fromIndex >= 0; fromIndex--){
+      if (fromIndex in array && array[fromIndex] === searchElement){
+        return [fromIndex];
+      }
+    }
+    return -1;
+  }
 
 // This is where the tests will go.
+
+tests({
+
+  'It should be a type of function.':function(){
+    lastIndexOf([0]);
+    eq(typeof lastIndexOf, "function");
+  },
+
+  'It should return the index of the last element that matches searchElement.': function(){
+    var array = [0,1,0,1];
+    var searchElement = 0;
+    var returnValueOfLastIndexOf = lastIndexOf(array, searchElement);
+    eq(returnValueOfLastIndexOf, 2);
+  },
+
+  'It should return -1 if no matches are found.': function(){
+    var array = [0,0];
+    var searchElement = 1;
+    var returnValueOfLastIndexOf = lastIndexOf(array, searchElement);
+    eq(returnValueOfLastIndexOf, -1);
+  },
+
+  'If fromIndex is not provided, it should default to array.length-1': function(){
+    var array = [0,1,0];
+    var searchElement = 0;
+    var returnValueOfLastIndexOf = lastIndexOf(array, searchElement);
+    eq(returnValueOfLastIndexOf, 2);
+  },
+
+  'If fromIndex is array.length-1, then the whole array should be searched.': function(){
+    var array = [0,1,2];
+    var searchElement = 0;
+    var fromIndex = array.length-1;
+    var returnValueOfLastIndexOf = lastIndexOf(array, searchElement, fromIndex)
+    eq(returnValueOfLastIndexOf, 0);
+  },
+  'If fromIndex is provided, it should begin the search at this index.': function(){
+    var array = [0,1,2,0];
+    var searchElement = 0;
+    var fromIndex = 1;
+    var returnValueOfLastIndexOf = lastIndexOf(array, searchElement, fromIndex)
+    eq(returnValueOfLastIndexOf, 0);
+  },
+
+  'If fromIndex is greater than or equal to array.length, the whole array should be searched.': function(){
+    var array = [0,1,2,3];
+    var searchElement = 0;
+    var fromIndex = 7;
+    var returnValueOfLastIndexOf = lastIndexOf(array, searchElement, fromIndex)
+    eq(returnValueOfLastIndexOf, 0);
+  },
+
+  'If fromIndex is a negative number which calculates to an index less than 0, -1 is returned - (array will not be searched).': function(){
+    var array = [0,1,2,3];
+    var searchElement = 0;
+    var fromIndex = -6;
+    var returnValueOfLastIndexOf = lastIndexOf(array, searchElement, fromIndex)
+    eq(returnValueOfLastIndexOf, -1);
+  },
+
+  'It should skip unassigned indices.': function(){
+    var array = [0,,3];
+    var searchElement = undefined;
+    var returnValueOfLastIndexOf = lastIndexOf(array, searchElement)
+    eq(returnValueOfLastIndexOf, -1);
+  },
+
+  'If fromIndex is a negative number, it should be taken as the offset from the end of the array.': function () {
+    var array = [2,3,1,0,1,2,3];
+    var searchElement = 3;
+    var fromIndex = -4;
+    var returnValueOfLastIndexOf = lastIndexOf(array, searchElement, fromIndex);
+    eq(returnValueOfLastIndexOf, 1);
+  }
+
+});
 
 </script>
