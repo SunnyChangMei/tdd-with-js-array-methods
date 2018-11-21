@@ -46,9 +46,7 @@
   // If fromIndex is greater than or equal to array.length, it should return false.
   // If fromIndex is provided, it should begin the search at this index.
   // If fromIndex is a negative number, it should be taken as the offset from the end of the array.
-
   // If the computed index from a negative value of fromIndex is less or equal than -1 * array.length, the entire array should be searched
-  // It should run properly on array-like objects.
   // It should not skip unassigned indices.
 
 
@@ -126,6 +124,10 @@ tests({
     eq(returnValueOfIncludes, false);
   },
 
+  'If the computed index from a negative value of fromIndex is less or equal than -1 * array.length, the entire array should be searched':function(){
+    var returnValueOfIncludes = includes([0,1,2,3,4], 4, -5);
+    eq(returnValueOfIncludes, true);
+  }
 
 });
 
