@@ -42,10 +42,12 @@
   // It should return false if searchElement is not found within array.
   // Value of 0 should be considered equal to -0.
   // Value of -0 should be considered equal to +0.
-
   // False should not be considered the same as 0.
-  // If fromIndex is provided, it should begin the search at this index.
   // If fromIndex is greater than or equal to array.length, it should return false.
+
+
+  // If fromIndex is provided, it should begin the search at this index.
+  
   // If fromIndex is a negative number, it should be taken as the offset from the end of the array.
   // If the computed index from a negative value of fromIndex is less or equal than -1 * array.length, the entire array should be searched
   // It should run properly on array-like objects.
@@ -53,7 +55,12 @@
 
 
 // This is where the function will go.
-  function includes(array, searchElement){
+  function includes(array, searchElement, fromIndex){
+
+    if (fromIndex >= array.length) {
+      return false;
+    }
+
     for (var i = 0; i < array.length; i++){
       if (array[i] === searchElement){
         return true;
@@ -92,8 +99,13 @@ tests({
   },
 
   'False should not be considered the same as 0.':function(){
-    var returnValueOfIncludes = includes([false], 0);
-    eq(returnValueOfIncludes, true);
+    var returnValueOfIncludes = includes([0], false);
+    eq(returnValueOfIncludes, false);
+  },
+
+  'If fromIndex is greater than or equal to array.length, it should return false.':function(){
+    var returnValueOfIncludes = includes([0], 0, 2);
+    eq(returnValueOfIncludes, false);
   },
 
 
