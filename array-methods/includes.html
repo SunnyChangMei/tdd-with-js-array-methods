@@ -40,10 +40,9 @@
   // It should be a type of function.
   // It should return true if searchElement is found within array.
   // It should return false if searchElement is not found within array.
-  // Values of 0 should all be considered equal regardless of sign.
-    // If array contains 0 and searchElement is -0, it should return true.
-    // If array contains -0 and searchElement is 0, it should return true.
-    // If array contains +0 and searchElement is 0, it should return true.
+  // Value of 0 should be considered equal to -0.
+  // Value of -0 should be considered equal to +0.
+
   // False should not be considered the same as 0.
   // If fromIndex is provided, it should begin the search at this index.
   // If fromIndex is greater than or equal to array.length, it should return false.
@@ -80,6 +79,16 @@ tests({
   'It should return false if searchElement is not found within array.':function(){
     var returnValueOfIncludes = includes([0], 1);
     eq(returnValueOfIncludes, false);
+  },
+
+  'Value of 0 should be considered equal to -0.':function(){
+    var returnValueOfIncludes = includes([0], -0);
+    eq(returnValueOfIncludes, true);
+  },
+
+  'Value of -0 should be considered equal to +0.':function(){
+    var returnValueOfIncludes = includes([-0], +0);
+    eq(returnValueOfIncludes, true);
   },
 
 
