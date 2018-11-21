@@ -54,7 +54,7 @@ For example, to add debugger to the first test of my findIndex method:
 
 - [x] Array.prototype.concat()
 - [x] Array.prototype.indexOf()
-- [ ] Array.prototype.lastIndexOf()
+- [x] Array.prototype.lastIndexOf()
 - [ ] Array.prototype.includes()
 - [ ] Array.prototype.slice()
 - [ ] Array.prototype.join()

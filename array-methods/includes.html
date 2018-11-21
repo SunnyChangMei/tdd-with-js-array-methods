@@ -1,0 +1,67 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/7.0/#sec-array.prototype.includes
+
+// Description:
+  // The includes() method determines whether an array includes a certain element, returning true or false as appropriate.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // includes(array, searchElement[, fromIndex]);
+
+
+// Parameters:
+  // array
+    // the array being performed on
+  // searchElement
+    // element to search for in array
+  // fromIndex (optional)
+    // the position at which we begin searching for searchElement
+
+
+
+// Return Value:
+  // returns true if the value is found or false otherwise
+
+
+// Requirements:
+  // It should be a type of function.
+  // It should return true if searchElement is found within array.
+  // It should return false if searchElement is not found within array.
+  // Values of 0 should all be considered equal regardless of sign.
+    // If array contains 0 and searchElement is -0, it should return true.
+    // If array contains -0 and searchElement is 0, it should return true.
+    // If array contains +0 and searchElement is 0, it should return true.
+  // False should not be considered the same as 0.
+  // If fromIndex is provided, it should begin the search at this index.
+  // If fromIndex is greater than or equal to array.length, it should return false.
+  // If fromIndex is a negative number, it should be taken as the offset from the end of the array.
+  // If the computed index from a negative value of fromIndex is less or equal than -1 * array.length, the entire array should be searched
+  // It should run properly on array-like objects.
+  // It should not skip unassigned indices.
+
+
+// This is where the function will go.
+
+
+// This is where the tests will go.
+
+tests({
+
+
+
+});
+
+</script>
