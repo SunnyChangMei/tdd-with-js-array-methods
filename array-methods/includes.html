@@ -60,7 +60,10 @@
 
 tests({
 
-
+  'It should be a type of function.':function(){
+    includes([0], 0);
+    eq(typeof includes, "function");
+  }
 
 });
 
