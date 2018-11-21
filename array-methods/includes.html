@@ -91,6 +91,11 @@ tests({
     eq(returnValueOfIncludes, true);
   },
 
+  'False should not be considered the same as 0.':function(){
+    var returnValueOfIncludes = includes([false], 0);
+    eq(returnValueOfIncludes, true);
+  },
+
 
 });
 
