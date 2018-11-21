@@ -77,6 +77,11 @@ tests({
     eq(returnValueOfIncludes, true);
   },
 
+  'It should return false if searchElement is not found within array.':function(){
+    var returnValueOfIncludes = includes([0], 1);
+    eq(returnValueOfIncludes, false);
+  },
+
 
 });
 
