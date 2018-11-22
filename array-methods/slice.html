@@ -44,11 +44,10 @@
   // It should return a different array than the original array.
   // If begin and end is not provided, it should return a new array containing all elements of array.
   // It should not change the original array.
+  // If begin is given, extraction should begin at this element.
 
 
   // It should return a new array containing the extracted elements.
-  // It should accept begin as a zero-based index to begin extraction.
-  // If begin is undefined, slice begins from index 0.
   // If begin is a negative number, it should be taken as the offset from the end of the array.
   // If begin is greater than array.length, an empty array is returned.
   // If end is provided, it should extract up to but not included end.
@@ -63,9 +62,19 @@
 
 
 // This is where the function will go.
-  function slice(array){
+  function slice(array, begin){
+
     var returnValueOfSlice = [];
-    for (var i = 0; i < array.length; i++){
+
+    if (begin) {
+      begin = begin
+    } else {
+      begin = 0;
+    }
+
+
+
+    for (var i = begin; i < array.length; i++){
       returnValueOfSlice.push(array[i]);
     }
     return returnValueOfSlice;
@@ -93,7 +102,7 @@ tests({
   },
 
   'If begin and end is not provided, it should return a new array containing all elements of array.':function(){
-    var returnValueOfSlice = slice([0,1,2]);
+    var returnValueOfSlice = slice([0,1,2], undefined, undefined);
     eq(returnValueOfSlice[0], 0);
     eq(returnValueOfSlice[1], 1);
     eq(returnValueOfSlice[2], 2);
@@ -105,7 +114,14 @@ tests({
     eq(originalArray[0], 0);
     eq(originalArray[1], 1);
     eq(originalArray[2], 2);
-  }
+  },
+
+  'If begin is given, extraction should begin at this element.':function(){
+    var returnValueOfSlice = slice([0,1,2], 1);
+    eq(returnValueOfSlice[0], 1);
+    eq(returnValueOfSlice[1], 2);
+  },
+
 
 
 
