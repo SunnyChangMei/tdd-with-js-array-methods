@@ -47,13 +47,13 @@
   // If begin is given, extraction should begin at this element.
   // If begin is greater than array.length, an empty array is returned.
   // If begin is a negative number, it should be taken as the offset from the end of the array.
-
   // If end is not provided, it should extract through the end of sequence i.e. array.length.
-
-
   // If end is provided, it should extract up to but not including end.
-  // If end is a negative number, it should be taken as the offset from the end of the array.
+
   // If end is greater than array.length, it should extract through the end of the sequence i.e. array.length.
+
+
+  // If end is a negative number, it should be taken as the offset from the end of the array.
   // It should return a shallow copy of element from the original array.
   // If a referenced object changes, the changes should be visible to both the new and original arrays.
   // Changes to a string, number or boolean in one array should not affect the other array.
@@ -62,9 +62,15 @@
 
 
 // This is where the function will go.
-  function slice(array, begin){
+  function slice(array, begin, end){
 
     var returnValueOfSlice = [];
+
+    if (end) {
+      end = end
+    } else {
+      end = array.length+1
+    }
 
     if (begin) {
       begin = begin
@@ -76,7 +82,7 @@
       begin = array.length +(begin)
     }
 
-    for (var i = begin; i < array.length; i++){
+    for (var i = begin; i < end; i++){
       returnValueOfSlice.push(array[i]);
     }
     return returnValueOfSlice;
@@ -140,6 +146,14 @@ tests({
     eq(returnValueOfSlice[0], 2);
     eq(returnValueOfSlice[1], 3);
     eq(returnValueOfSlice[2], 4);
+  },
+
+  'If end is provided, it should extract up to but not including end.':function(){
+    var returnValueOfSlice = slice([0,1,2,3,4], 2, 4);
+    eq(returnValueOfSlice[0], 2);
+    eq(returnValueOfSlice[1], 3);
+    eq(returnValueOfSlice[2], null);
+
   },
 
 
