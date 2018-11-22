@@ -61,7 +61,8 @@
 
 // This is where the function will go.
   function slice(array){
-    return array;
+    var returnValueOfSlice = [];
+    return returnValueOfSlice;
   };
 
 // This is where the tests will go.
@@ -73,10 +74,16 @@ tests({
     eq(typeof slice, "function");
   },
 
-  'It should return an array.': function(){
+  'It should return an array.':function(){
     var array = [];
     var returnValueOfSlice = slice(array);
     eq(Array.isArray(returnValueOfSlice), true);
+  },
+
+  'It should return a different array than the original array.':function(){
+    var array = [];
+    var returnValueOfSlice = slice(array);
+    eq(returnValueOfSlice === array, false);
   }
 
 
