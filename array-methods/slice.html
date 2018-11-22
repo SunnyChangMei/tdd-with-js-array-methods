@@ -1,0 +1,74 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.10
+
+// Description:
+  // The slice() method returns a shallow copy of a portion of an array
+  // into a new array object selected from begin to end (end not included).
+  // The original array will not be modified.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // slice(array[,begin, end]])
+
+
+// Parameters:
+  // array
+    // the array being performed on
+  // begin (optional)
+    // the index to begin extraction
+  // end (optional)
+    // the index to extract up to but not including
+
+
+// Return Value:
+  // A new array containing the extracted elements.
+
+
+
+// Requirements:
+  // It should be a type of function.
+  // It should return a new array containing the extracted elements.
+  // It should accept begin as a zero-based index to begin extraction.
+  // If begin is undefined, slice begins from index 0.
+  // If begin is a negative number, it should be taken as the offset from the end of the array.
+  // If begin is greater than array.length, an empty array is returned.
+  // If end is provided, it should extract up to but not included end.
+  // If end is a negative number, it should be taken as the offset from the end of the array.
+  // If end is not provided, it should extract trough the end of sequence i.e. array.length.
+  // If end is greater than array.length, it should extract through the end of the sequence i.e. array.length.
+  // It should not change the original array.
+  // It should return a shallow copy of element from the original array.
+  // If a referenced object changes, the changes should be visible to both the new and original arrays.
+  // Changes to a string, number or boolean in one array should not affect the other array.
+  // If a new element is added to either array, the other array should not be affected.
+
+
+
+// This is where the function will go.
+
+
+// This is where the tests will go.
+
+tests({
+
+  'It should be a type of function.':function(){
+    slice();
+    eq(typeof slice, "function");
+  }
+
+});
+
+</script>
