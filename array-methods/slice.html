@@ -40,6 +40,8 @@
 
 // Requirements:
   // It should be a type of function.
+  // It should return an array.
+  // It should return a different array than the original array.
   // It should return a new array containing the extracted elements.
   // It should accept begin as a zero-based index to begin extraction.
   // If begin is undefined, slice begins from index 0.
@@ -58,7 +60,9 @@
 
 
 // This is where the function will go.
-
+  function slice(array){
+    return array;
+  };
 
 // This is where the tests will go.
 
@@ -67,7 +71,15 @@ tests({
   'It should be a type of function.':function(){
     slice();
     eq(typeof slice, "function");
+  },
+
+  'It should return an array.': function(){
+    var array = [];
+    var returnValueOfSlice = slice(array);
+    eq(Array.isArray(returnValueOfSlice), true);
   }
+
+
 
 });
 
