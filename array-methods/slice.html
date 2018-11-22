@@ -156,6 +156,13 @@ tests({
 
   },
 
+  'If end is greater than array.length, it should extract through the end of the sequence i.e. array.length.':function(){
+    var returnValueOfSlice = slice([0,1,2], 0, 7);
+    eq(returnValueOfSlice[0], 0);
+    eq(returnValueOfSlice[1], 1);
+    eq(returnValueOfSlice[2], 2);
+  },
+
 
 
 
