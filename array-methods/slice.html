@@ -42,6 +42,10 @@
   // It should be a type of function.
   // It should return an array.
   // It should return a different array than the original array.
+  // If begin and end is not provided, it should return a new array containing all elements of array.
+  // It should not change the original array.
+
+
   // It should return a new array containing the extracted elements.
   // It should accept begin as a zero-based index to begin extraction.
   // If begin is undefined, slice begins from index 0.
@@ -51,7 +55,6 @@
   // If end is a negative number, it should be taken as the offset from the end of the array.
   // If end is not provided, it should extract trough the end of sequence i.e. array.length.
   // If end is greater than array.length, it should extract through the end of the sequence i.e. array.length.
-  // It should not change the original array.
   // It should return a shallow copy of element from the original array.
   // If a referenced object changes, the changes should be visible to both the new and original arrays.
   // Changes to a string, number or boolean in one array should not affect the other array.
@@ -62,6 +65,9 @@
 // This is where the function will go.
   function slice(array){
     var returnValueOfSlice = [];
+    for (var i = 0; i < array.length; i++){
+      returnValueOfSlice.push(array[i]);
+    }
     return returnValueOfSlice;
   };
 
@@ -70,7 +76,7 @@
 tests({
 
   'It should be a type of function.':function(){
-    slice();
+    slice([]);
     eq(typeof slice, "function");
   },
 
@@ -84,6 +90,21 @@ tests({
     var array = [];
     var returnValueOfSlice = slice(array);
     eq(returnValueOfSlice === array, false);
+  },
+
+  'If begin and end is not provided, it should return a new array containing all elements of array.':function(){
+    var returnValueOfSlice = slice([0,1,2]);
+    eq(returnValueOfSlice[0], 0);
+    eq(returnValueOfSlice[1], 1);
+    eq(returnValueOfSlice[2], 2);
+  },
+
+  'It should not change the original array.':function(){
+    var originalArray = [0,1,2];
+    slice(originalArray);
+    eq(originalArray[0], 0);
+    eq(originalArray[1], 1);
+    eq(originalArray[2], 2);
   }
 
 
