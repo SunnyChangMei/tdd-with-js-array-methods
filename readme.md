@@ -57,7 +57,7 @@ For example, to add debugger to the first test of my findIndex method:
 - [x] Array.prototype.lastIndexOf()
 - [x] Array.prototype.includes()
 - [x] Array.prototype.slice()
-- [ ] Array.prototype.join()
+- [x] Array.prototype.join()
 
 #### Mutators:
 
