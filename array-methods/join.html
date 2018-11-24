@@ -1,0 +1,91 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join#Specifications
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.join
+
+// Description:
+  // The join() method creates and returns a new string by concatenating
+  // all of the elements in an array (or an array-like object),
+  // separated by commas or a specified separator string.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // join(array[, separator])
+
+
+// Parameters:
+  // array - the array being performed on
+  // separator (optional) - specifies a string to separate each pair of adjacent elements of the array.
+
+
+
+// Return Value:
+  // A string with all array elements joined. If arr.length is 0, the empty string is returned.
+
+
+// Requirements:
+  // It should be a type of function.
+  // It should return a string.
+  // If array.length is 0, the empty string is returned.
+
+  // If separator is not provided, function should return a string of all elements separated by commas.
+  // If separator is provided, function should return a string of all elements separated by the separator.
+  // The separator should be converted to a string if necessary.
+  // If separator is an empty string, all elements are joined without any characters in between them.
+  // If an element is undefined or null, it should be converted to an empty string.
+
+
+// This is where the function will go.
+
+  function join(array){
+    var separator = ",";
+    var returnValueOfJoin = "";
+    for(var i = 0; i < array.length; i++){
+      returnValueOfJoin += array[i] += separator;
+    }
+    returnValueOfJoin = returnValueOfJoin.slice(0, -1);
+    return returnValueOfJoin
+  }
+
+// This is where the tests will go.
+
+tests({
+
+  'It should be a type of function.':function(){
+    join([0]);
+    eq(typeof join, "function");
+  },
+
+  'It should return a string.':function(){
+    var returnValueOfJoin = join([0]);
+    eq(typeof returnValueOfJoin, "string");
+  },
+
+  'If array.length is 0, the empty string is returned.':function(){
+    var returnValueOfJoin = join([]);
+    eq(returnValueOfJoin, "");
+  },
+
+  'If separator is not provided, function should return a string of all elements separated by commas.':function(){
+    var array = [0,1,2]
+    var returnValueOfJoin = join(array);
+    eq(returnValueOfJoin, "0,1,2");
+  },
+
+
+
+
+})
+
+</script>
