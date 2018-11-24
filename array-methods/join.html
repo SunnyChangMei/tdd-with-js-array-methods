@@ -42,7 +42,6 @@
   // If separator is provided, function should return a string of all elements separated by the separator.
   // The separator should be converted to a string if necessary.
   // If separator is an empty string, all elements are joined without any characters in between them.
-
   // If an element is undefined or null, it should be converted to an empty string.
 
 
@@ -61,6 +60,9 @@
 
     var returnValueOfJoin = "";
     for(var i = 0; i < array.length; i++){
+      if (array[i] === undefined || array[i] === null) {
+        array[i] = "";
+      }
       returnValueOfJoin += array[i] += separator;
     }
     if (returnValueOfJoin.length > array.length) {
@@ -113,6 +115,12 @@ tests({
     var separator = '';
     var returnValueOfJoin = join(array, separator);
     eq(returnValueOfJoin, "012");
+  },
+
+  'If an element is undefined or null, it should be converted to an empty string.':function(){
+    var array = [0,undefined,null]
+    var returnValueOfJoin = join(array);
+    eq(returnValueOfJoin, "0,,");
   },
 
 
