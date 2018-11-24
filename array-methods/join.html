@@ -38,18 +38,27 @@
   // It should be a type of function.
   // It should return a string.
   // If array.length is 0, the empty string is returned.
-
   // If separator is not provided, function should return a string of all elements separated by commas.
   // If separator is provided, function should return a string of all elements separated by the separator.
   // The separator should be converted to a string if necessary.
+
   // If separator is an empty string, all elements are joined without any characters in between them.
   // If an element is undefined or null, it should be converted to an empty string.
 
 
 // This is where the function will go.
 
-  function join(array){
-    var separator = ",";
+  function join(array, separator){
+
+    if (separator === undefined) {
+      var separator = ",";
+    } else {
+      var separator = separator;
+      if (typeof separator, "number"){
+        separator = separator.toString();
+      }
+    }
+
     var returnValueOfJoin = "";
     for(var i = 0; i < array.length; i++){
       returnValueOfJoin += array[i] += separator;
@@ -81,6 +90,20 @@ tests({
     var array = [0,1,2]
     var returnValueOfJoin = join(array);
     eq(returnValueOfJoin, "0,1,2");
+  },
+
+  'If separator is provided, function should return a string of all elements separated by the separator.':function(){
+    var array = [0,1,2]
+    var separator = "-";
+    var returnValueOfJoin = join(array, separator);
+    eq(returnValueOfJoin, "0-1-2");
+  },
+
+  'The separator should be converted to a string if necessary.':function(){
+    var array = [0,1,2]
+    var separator = 8;
+    var returnValueOfJoin = join(array, separator);
+    eq(returnValueOfJoin, "08182");
   },
 
 
