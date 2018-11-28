@@ -1,0 +1,151 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.push
+
+// Description:
+  // The push() method adds one or more elements to the end of an array and returns the new length of the array.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // push(array[, ...elementN])
+
+
+// Parameters:
+  // array - the array to be operated on
+  // elementN - the element(s) to add to array (optional, may be none, one, or many)
+
+
+
+// Return Value:
+  // The new length property of the object upon which the method was called.
+
+
+// Requirements:
+  // It should be a type of function.
+  // It should return typeof number
+  // It should return array.length.
+  // It should append elementN to the end of array.
+  // It should append multiple values of elementN to the end of array.
+  // It should accept elementN as an array and append to the original array.
+  // It should work on objects resembling arrays.
+  // If argument[0] is a string, then a TypeError should be thrown.
+
+  // If array.length cannot be converted into a number, the index used should be 0.
+  // If length is null, the index used should be 0.
+  // It should allow for using .apply to merge two arrays.
+
+
+
+
+// This is where the function will go.
+
+function push(array, elementN){
+
+  if (typeof array === "string") {
+    throw new TypeError("The first argument cannot be a string. Try an array instead.");
+  }
+
+  var indexToAppend = array.length;
+  var indexOfElementN = 1;
+
+  for (var i = indexToAppend; indexOfElementN < arguments.length; i++, indexOfElementN++){
+    array[i] = arguments[indexOfElementN];
+  }
+
+  return array.length;
+}
+
+// This is where the tests will go.
+
+tests({
+
+  'It should be a type of function.':function(){
+    push([0], 1);
+    eq(typeof push, "function");
+  },
+
+  'It should return typeof number':function(){
+    var returnValueOfPush = push([0]);
+    eq(typeof returnValueOfPush, "number");
+  },
+
+  'It should return array.length.':function(){
+    var array = [0];
+    var returnValueOfPush = push(array);
+    eq(returnValueOfPush, 1);
+  },
+
+  'It should append elementN to the end of array.':function(){
+    var array = [0];
+    push(array, 1);
+    eq(array[0], 0);
+    eq(array[1], 1);
+  },
+
+  'It should append multiple values of elementN to the end of array.':function(){
+    var array = [0];
+    push(array, 1,2,3);
+    eq(array[0], 0);
+    eq(array[1], 1);
+    eq(array[2], 2);
+    eq(array[3], 3);
+  },
+
+  'It should accept elementN as an array and append to the original array.':function(){
+    var array = [0];
+    push(array, [1]);
+    eq(array[0], 0);
+    eq(array[1], 1);
+    eq(array.length, 2)
+  },
+
+  'It should work on objects resembling arrays.':function(){
+    var array = [0];
+    var object = {
+      name: 'Nolan',
+      location: 'Chicago'
+    }
+    push(array, object);
+    eq(array[0], 0);
+    eq(array[1], object);
+    eq(array.length, 2);
+  },
+
+  'It should work on objects resembling arrays.':function(){
+    var array = [0];
+    var object = {
+      name: 'Nolan',
+      location: 'Chicago'
+    }
+    push(array, object);
+    eq(array[0], 0);
+    eq(array[1], object);
+    eq(array.length, 2);
+  },
+
+  'If argument[0] is a string, then a TypeError should be thrown.': function(){
+    var isTypeError = false;
+    var string = 'hi';
+    try {
+      push(string, 0);
+    } catch(e) {
+      isTypeError = (e instanceof TypeError);
+    }
+    eq(isTypeError, true);
+  }
+
+});
+
+</script>
