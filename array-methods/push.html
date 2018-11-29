@@ -42,12 +42,6 @@
   // It should work on objects resembling arrays.
   // If argument[0] is a string, then a TypeError should be thrown.
 
-  // If array.length cannot be converted into a number, the index used should be 0.
-  // If length is null, the index used should be 0.
-  // It should allow for using .apply to merge two arrays.
-
-
-
 
 // This is where the function will go.
 
@@ -109,18 +103,6 @@ tests({
     eq(array[0], 0);
     eq(array[1], 1);
     eq(array.length, 2)
-  },
-
-  'It should work on objects resembling arrays.':function(){
-    var array = [0];
-    var object = {
-      name: 'Nolan',
-      location: 'Chicago'
-    }
-    push(array, object);
-    eq(array[0], 0);
-    eq(array[1], object);
-    eq(array.length, 2);
   },
 
   'It should work on objects resembling arrays.':function(){
