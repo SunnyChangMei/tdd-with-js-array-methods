@@ -1,0 +1,84 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift
+
+// Specs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift#Specifications
+
+// Description:
+  // The shift() method removes the first element from an array
+  // and returns that removed element.
+  // This method changes the length of the array.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // shift(array);
+
+
+// Parameters:
+  // array - the array being operated on.
+
+
+
+// Return Value:
+  // The removed element from the array; undefined if the array is empty.
+
+
+
+// Requirements:
+  // It should remove the first element from array.
+  // It should return the value that was removed.
+  // It should return undefined if array.length is 0.
+
+
+// This is where the function will go.
+
+function pop(array){
+  var length = array.length;
+  if (length === 0){
+    return undefined;
+  } else {
+    length = length - 1;
+    var index = 0;
+    var element = array[index];
+    var deletedElement = element;
+    delete element;
+    array.length = length;
+  }
+  return deletedElement;
+};
+
+// This is where the tests will go.
+
+tests({
+
+  'It should remove the first element from array.': function(){
+    var array = [0,1];
+    pop(array);
+    eq(array.length, 1);
+  },
+
+  'It should return the value that was removed.': function(){
+    var array = [0,1];
+    var returnValueOfPop = pop(array);
+    eq(returnValueOfPop, 0);
+  },
+
+  'It should return undefined if array.length is 0.': function(){
+    var array = [];
+    var returnValueOfPop = pop(array);
+    eq(returnValueOfPop, undefined);
+  }
+
+});
+
+</script>

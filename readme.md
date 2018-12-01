@@ -63,7 +63,7 @@ For example, to add debugger to the first test of my findIndex method:
 
 - [x] Array.prototype.push()
 - [x] Array.prototype.pop()
-- [ ] Array.prototype.shift()
+- [x] Array.prototype.shift()
 - [ ] Array.prototype.unshift()
 - [ ] Array.prototype.fill()
 - [ ] Array.prototype.reverse()
