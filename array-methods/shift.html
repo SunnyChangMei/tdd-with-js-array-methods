@@ -42,7 +42,7 @@
 
 // This is where the function will go.
 
-function pop(array){
+function shift(array){
   var length = array.length;
   if (length === 0){
     return undefined;
@@ -63,20 +63,20 @@ tests({
 
   'It should remove the first element from array.': function(){
     var array = [0,1];
-    pop(array);
+    shift(array);
     eq(array.length, 1);
   },
 
   'It should return the value that was removed.': function(){
     var array = [0,1];
-    var returnValueOfPop = pop(array);
-    eq(returnValueOfPop, 0);
+    var returnValueOfShift = shift(array);
+    eq(returnValueOfShift, 0);
   },
 
   'It should return undefined if array.length is 0.': function(){
     var array = [];
-    var returnValueOfPop = pop(array);
-    eq(returnValueOfPop, undefined);
+    var returnValueOfShift = shift(array);
+    eq(returnValueOfShift, undefined);
   }
 
 });

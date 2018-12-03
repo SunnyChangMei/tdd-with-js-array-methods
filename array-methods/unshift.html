@@ -1,0 +1,111 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.unshift
+
+// Description:
+  // The unshift() method adds one or more elements to the beginning of an array
+  // and returns the new length of the array.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // unshift(array [, ...elementN])
+
+
+// Parameters:
+  // elementN - The elements to add to the front of the array.
+
+
+
+// Return Value:
+  // The new length property of the object upon which the method was called.
+
+
+// Requirements:
+  // It should insert elementN to the beginning of array.
+  // It should return array.length.
+
+
+// This is where the function will go.
+
+// function unshift(array, elementN){
+//
+//   var firstElementIndex = 0;
+//   var firstElement = array[firstElementIndex];
+//   array[firstElementIndex++];
+//   array[firstElementIndex] = firstElement;
+//   array[0] = elementN;
+//   return array.length;
+// };
+
+function unshift(array) {
+  // creates an array to contain the unshifted items
+  var itemsToUnshift = [];
+  // sets the unshift index to 0 to start
+  var unshiftIndex = 0;
+
+  // adds each of elementN to the unshiftedArray
+  for (var i = 1; i < arguments.length; i++, unshiftIndex++){
+    itemsToUnshift[unshiftIndex] = arguments[i];
+  }
+
+  // add the elements of the array one by one to the end of the unshiftedArray
+  for (var i = 0; i < array.length; i++, unshiftIndex++){
+    itemsToUnshift[unshiftIndex] = array[i];
+  }
+
+  // deletes contents of array
+  array.length = 0;
+
+  // adds each item of the unshiftedArray back into the original array
+  for (var i = 0; i < itemsToUnshift.length; i++){
+    array[i] = itemsToUnshift[i];
+  }
+
+  //returns the length of original array
+  return array.length;
+}
+
+
+
+// This is where the tests will go.
+
+tests({
+
+  'It should insert elementN to the beginning of array.': function(){
+    var array = [1];
+    unshift(array,0);
+    eq(array[0], 0);
+    eq(array[1], 1);
+    eq(array.length, 2);
+  },
+
+  'It should return array.length.': function(){
+    var array = [1];
+    var returnValueOfUnshift = unshift(array,0);
+    eq(returnValueOfUnshift, 2);
+  },
+
+  'It should insert multiple values for elementN to the beginning of array.': function(){
+    var array = [2];
+    unshift(array,0,1);
+    eq(array[0], 0);
+    eq(array[1], 1);
+    eq(array[2], 2);
+    eq(array.length, 3);
+  }
+
+});
+
+</script>
