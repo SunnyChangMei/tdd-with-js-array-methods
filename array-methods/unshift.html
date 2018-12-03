@@ -39,17 +39,7 @@
 
 // This is where the function will go.
 
-// function unshift(array, elementN){
-//
-//   var firstElementIndex = 0;
-//   var firstElement = array[firstElementIndex];
-//   array[firstElementIndex++];
-//   array[firstElementIndex] = firstElement;
-//   array[0] = elementN;
-//   return array.length;
-// };
-
-function unshift(array) {
+function unshift(array, elementN) {
   // creates an array to contain the unshifted items
   var itemsToUnshift = [];
   // sets the unshift index to 0 to start
@@ -76,7 +66,6 @@ function unshift(array) {
   //returns the length of original array
   return array.length;
 }
-
 
 
 // This is where the tests will go.
