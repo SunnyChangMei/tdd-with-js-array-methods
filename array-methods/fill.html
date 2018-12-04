@@ -1,0 +1,161 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.fill
+
+// Description:
+  // The fill() method fills all the elements of an array from a start index
+  // to an end index with a static value. The end index is not included.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // fill(array, value[,start[, end]])
+
+
+// Parameters:
+  // array - the original Array
+  // value - the value to the fill the array with
+  // start - the index to start at, default is 0 (optional)
+  // end - the index to end at, default is this.length (optional)
+
+
+
+// Return Value:
+  // Returns the modified array.
+
+
+// Requirements:
+  // It should fill each element of the array with value.
+  // If value is not provided, array should be filled with undefined values.
+  // It should use 0 as the default value of start if not provided.
+  // It should start filling at index of start if provided.
+  // It should use this.length as the default value of end if not provided.
+  // If start is negative, it should be array.length + start.
+  // If end is negative, it should be array.length + end.
+  // It should return the modified array.
+
+
+// This is where the function will go.
+
+function fill(array, value, start, end){
+
+  if (start === undefined){
+    start = 0;
+  } else if (start < 0){
+      start = array.length + start;
+  } else {
+      start = start;
+  }
+
+  if (end === undefined){
+    end = array.length;
+  } else if (end < 0){
+      end = array.length + end;
+  } else {
+      end = end;
+  }
+
+  for (var i = start; i < end; i++){
+    array[i] = value;
+  }
+
+  return array;
+
+}
+
+// This is where the tests will go.
+
+tests({
+
+  'It should fill each element of the array with value.':function(){
+    var array = [1,2,3];
+    var value = 0;
+    fill(array, value);
+    eq(array[0], 0);
+    eq(array[1], 0);
+    eq(array[2], 0);
+  },
+
+  'If value is not provided, array should be filled with undefined values.':function(){
+    var array = [1,2,3];
+    fill(array);
+    eq(array[0], undefined);
+    eq(array[1], undefined);
+    eq(array[2], undefined);
+  },
+
+  'It should use 0 as the default value of start if not provided.':function(){
+    var array = [1,2,3];
+    var value = 'a';
+    var start = undefined;
+    fill(array, value, start);
+    eq(array[0], 'a');
+    eq(array[1], 'a');
+    eq(array[2], 'a');
+  },
+
+  'It should start filling at index of start if provided.':function(){
+    var array = [1,2,3];
+    var value = 'a';
+    var start = 1;
+    fill(array, value, start);
+    eq(array[0], 1);
+    eq(array[1], 'a');
+    eq(array[2], 'a');
+  },
+
+  'It should use this.length as the default value of end if not provided.':function(){
+    var array = [1,2,3];
+    var value = 'a';
+    var start = undefined;
+    var end = undefined;
+    fill(array, value, start, end);
+    eq(array[0], 'a');
+    eq(array[1], 'a');
+    eq(array[2], 'a');
+  },
+
+  'If start is negative, it should be array.length + start.':function(){
+    var array = [1,2,3];
+    var value = 'a';
+    var start = -1;
+    fill(array, value, start);
+    eq(array[0], 1);
+    eq(array[1], 2);
+    eq(array[2], 'a');
+  },
+
+  'If end is negative, it should be array.length + end.':function(){
+    var array = [1,2,3];
+    var value = 'a';
+    var start = undefined;
+    var end = -1;
+    fill(array, value, start, end);
+    eq(array[0], 'a');
+    eq(array[1], 'a');
+    eq(array[2], 3);
+  },
+
+  'It should return the modified array.':function(){
+    var array = [1,2,3];
+    var value = 0;
+    var returnValueOfFill = fill(array, value);
+    eq(returnValueOfFill[0], array[0]);
+    eq(returnValueOfFill[1], array[0]);
+    eq(returnValueOfFill[2], array[0]);
+  }
+
+});
+
+</script>
