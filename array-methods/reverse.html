@@ -1,0 +1,84 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.reverse
+
+// Description:
+  // The reverse() method reverses an array in place.
+  // The first array element becomes the last, and the last array element becomes the first.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // reverse(array)
+
+
+// Parameters:
+  // array - the array that is to be reversed
+
+
+
+// Return Value:
+  // The reversed array.
+
+
+// Requirements:
+  // It should reverse the elements of the array in place.
+  // It should return the array.
+  // It should return the same number of elements as the original array.
+
+
+// This is where the function will go.
+
+function reverse(array){
+
+  leftElement = undefined;
+  rightIndex = array.length-1;
+
+  for (var i = 0; i < array.length; i++, rightIndex--){
+    if (i >= rightIndex){
+      return array;
+    }
+    leftElement = array[i];
+    array[i] = array[rightIndex];
+    array[rightIndex] = leftElement;
+  }
+}
+
+// This is where the tests will go.
+
+tests({
+
+  'It should reverse the elements of the array in place.':function(){
+    var array = [0,1,2];
+    reverse(array);
+    eq(array[0], 2);
+    eq(array[1], 1);
+    eq(array[2], 0);
+  },
+
+  'It should return the array.':function(){
+    var array = [0,1,2];
+    var returnValueOfReverse = reverse(array);
+    eq(returnValueOfReverse, array)
+  },
+
+  'It should return the same number of elements as the original array.':function(){
+    var array = [0,1,2];
+    var returnValueOfReverse = reverse(array);
+    eq(returnValueOfReverse.length, array.length)
+  }
+
+});
+
+</script>
