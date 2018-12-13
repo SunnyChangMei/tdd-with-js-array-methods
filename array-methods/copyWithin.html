@@ -1,0 +1,184 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.copywithin
+
+// Description:
+  // The copyWithin() method shallow copies part of an array to another location in the same array and returns it, without modifying its size.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // copyWithin(array,target[, start[, end]])
+
+
+// Parameters:
+  // array - the array being operated on
+  // target - the index to copy the sequence to
+  // start - the index to start copying from (optional)
+  // end - the index to stop copying (optional)
+
+
+// Return Value:
+  // returns the modified array
+
+
+// Requirements:
+  // It should return the modified array.
+  // It should not alter the length of the array.
+  // If target is undefined the array should be copied into position at array[0].
+  // If target is defined the array should be copied into position at array[target].
+  // If target is negative it should be counted from the end.
+  // If target is greater than or equal to array.length, nothing should be copied.
+  // If target is greater than start the copied sequence should be trimmed to fit array.length.
+  // If start is undefined it should default to 0.
+  // If start is defined it should start copying from start.
+  // If start is negative it should be counted from the end.
+  // If end is defined it should copy up to but not including end.
+  // If end is undefined it should copy until array.length.
+  // If end is negative it should  be counted from the end.
+
+
+
+// This is where the function will go.
+
+function copyWithin(array, target, start, end){
+
+  var copiedArray = [];
+  var copiedIndex = 0;
+  var targetIndex;
+  var startIndex;
+  var end;
+
+  if (target < 0) {
+    targetIndex = array.length + target
+  } else if (target) {
+    targetIndex = target;
+  } else {
+    targetIndex = 0;
+  }
+
+  if (start) {
+    startIndex = start;
+  } else {
+    startIndex = 0;
+  }
+
+  if (end) {
+    endIndex = end;
+  } else {
+    endIndex = array.length;
+  }
+
+  for (var i = startIndex; i < array.length; i++, copiedIndex++) {
+    copiedArray[copiedIndex] = array[i];
+  }
+
+  copiedIndex = 0;
+
+  for (var i = targetIndex; i < array.length; i++, copiedIndex++) {
+    array[i] = copiedArray[copiedIndex];
+  }
+
+  return array
+}
+
+
+// This is where the tests will go.
+
+tests ({
+
+  'It should return the modified array.':function(){
+    var array = [0,1,2];
+    var returnValueOfCopyWithin = copyWithin(array);
+    eq(array, returnValueOfCopyWithin);
+  },
+
+  'It should not alter the length of the array.':function(){
+    var array = [0,1,2];
+    copyWithin(array);
+    eq(array.length, 3);
+  },
+
+  'If target is undefined, the array should be copied into position at array[0].':function(){
+    var array = [0,1,2];
+    var target = undefined;
+    var returnValueOfCopyWithin = copyWithin(array, target);
+    eq(array, returnValueOfCopyWithin);
+  },
+
+  'If target is defined, the array should be copied into position at array[target].':function(){
+    var array = [0,1,2];
+    var target = 1;
+    var returnValueOfCopyWithin = copyWithin(array, target);
+    eq(array[0], 0);
+    eq(array[1], 0);
+    eq(array[2], 1);
+    eq(array[3], null);
+  },
+
+  'If target is negative it should be counted from the end.':function(){
+    var array = [0,1,2];
+    var target = -1;
+    var returnValueOfCopyWithin = copyWithin(array, target);
+    eq(array[0], 0);
+    eq(array[1], 1);
+    eq(array[2], 0);
+  },
+
+  'If target is greater than or equal to array.length, nothing should be copied.':function(){
+    var array = [0,1,2];
+    var target = 4;
+    var returnValueOfCopyWithin = copyWithin(array, target);
+    eq(array[0], 0);
+    eq(array[1], 1);
+    eq(array[2], 2);
+    eq(array[3], null);
+  },
+
+  'If target is greater than start the copied sequence should be trimmed to fit array.length.':function(){
+    var array = [0,1,2];
+    var target = 1;
+    var start = 0;
+    var returnValueOfCopyWithin = copyWithin(array, target);
+    eq(array[0], 0);
+    eq(array[1], 0);
+    eq(array[2], 1);
+    eq(array[3], null);
+  },
+
+  'If start is undefined it should default to 0.':function(){
+    var array = [0,1,2];
+    var target = 1;
+    var start = undefined;
+    var returnValueOfCopyWithin = copyWithin(array, target, start);
+    eq(array[0], 0);
+    eq(array[1], 0);
+    eq(array[2], 1);
+    eq(array[3], null);
+  },
+
+  'If start is defined it should start copying from start.':function(){
+    var array = [0,1,2];
+    var target = 0;
+    var start = 2;
+    var returnValueOfCopyWithin = copyWithin(array, target, start);
+    eq(array[0], 2);
+    eq(array[1], 1);
+    eq(array[2], 1);
+  },
+
+
+});
+
+</script>
