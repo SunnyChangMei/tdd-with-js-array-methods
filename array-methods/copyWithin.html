@@ -86,7 +86,7 @@ function copyWithin(array, target, start, end){
 
   copiedIndex = 0;
 
-  for (var i = targetIndex; i < array.length; i++, copiedIndex++) {
+  for (var i = targetIndex; i < copiedArray.length; i++, copiedIndex++) {
     array[i] = copiedArray[copiedIndex];
   }
 
@@ -175,7 +175,17 @@ tests ({
     var returnValueOfCopyWithin = copyWithin(array, target, start);
     eq(array[0], 2);
     eq(array[1], 1);
-    eq(array[2], 1);
+    eq(array[2], 2);
+  },
+
+  'If start is negative it should be counted from the end.':function(){
+    var array = [0,1,2];
+    var target = 0;
+    var start = -1;
+    var returnValueOfCopyWithin = copyWithin(array, target, start);
+    eq(array[0], 2);
+    eq(array[1], 1);
+    eq(array[2], 2);
   },
 
 
