@@ -44,8 +44,8 @@
   // If start is undefined it should default to 0.
   // If start is defined it should start copying from start.
   // If start is negative it should be counted from the end.
-  // If end is defined it should copy up to but not including end.
   // If end is undefined it should copy until array.length.
+  // If end is defined it should copy up to but not including end.
   // If end is negative it should  be counted from the end.
 
 
@@ -58,7 +58,7 @@ function copyWithin(array, target, start, end){
   var copiedIndex = 0;
   var targetIndex;
   var startIndex;
-  var end;
+
 
   if (target < 0) {
     targetIndex = array.length + target
@@ -68,19 +68,23 @@ function copyWithin(array, target, start, end){
     targetIndex = 0;
   }
 
-  if (start) {
+  if (start < 0) {
+    startIndex = array.length + start;
+  } else if (start >= 0) {
     startIndex = start;
   } else {
     startIndex = 0;
   }
 
-  if (end) {
-    endIndex = end;
+  if (end < 0) {
+    endIndex = array.length +  end;
+  } else if (end) {
+    endIndex = end
   } else {
     endIndex = array.length;
   }
 
-  for (var i = startIndex; i < array.length; i++, copiedIndex++) {
+  for (var i = startIndex; i < array.length && i < endIndex; i++, copiedIndex++) {
     copiedArray[copiedIndex] = array[i];
   }
 
@@ -184,6 +188,39 @@ tests ({
     var start = -1;
     var returnValueOfCopyWithin = copyWithin(array, target, start);
     eq(array[0], 2);
+    eq(array[1], 1);
+    eq(array[2], 2);
+  },
+
+  'If end is undefined it should copy until array.length.':function(){
+    var array = [0,1,2];
+    var target = 0;
+    var start = 1;
+    var end = undefined;
+    var returnValueOfCopyWithin = copyWithin(array, target, start, end);
+    eq(array[0], 1);
+    eq(array[1], 2);
+    eq(array[2], 2);
+  },
+
+  'If end is defined it should copy up to but not including end.':function(){
+    var array = [0,1,2];
+    var target = 0;
+    var start = 1;
+    var end = 1;
+    var returnValueOfCopyWithin = copyWithin(array, target, start, end);
+    eq(array[0], 0);
+    eq(array[1], 1);
+    eq(array[2], 2);
+  },
+
+  'If end is negative it should  be counted from the end.':function(){
+    var array = [0,1,2];
+    var target = 0;
+    var start = 1;
+    var end = -1;
+    var returnValueOfCopyWithin = copyWithin(array, target, start, end);
+    eq(array[0], 1);
     eq(array[1], 1);
     eq(array[2], 2);
   },
