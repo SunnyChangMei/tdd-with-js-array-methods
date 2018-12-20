@@ -36,19 +36,102 @@
   // The sorted array. Note that the array is sorted in place, and no copy is made.
 
 
+// Notes
+
+  // Use codePointAt() to get the unicode value of a string, example:
+  // "banana".codePointAt();
+    // returns 98
+  // "cherry".codePointAt();
+    // returns 99
+
+// Compare Function
+
+  // function compare(a, b) {
+  //   var comparision = a-b
+  //   if (comparision < 0) {
+  //     return -1;
+  //   }
+  //   if (comparision > 0) {
+  //     return 1;
+  //   }
+  //   if (comparision === 0) {
+  //     return 0;
+  //   }
+  // }
+
+
 // Requirements:
+
+  // It should return the array.
+  // It should return the original array, not a copy.
+  // If compareFunction is undefined, the array should be sorted according to each defined character's Unicode code point value, according to the string conversion of each element.
+  // It compareFunction is undefined, all undefined elements should be sent to the end of the array.
+  // If compareFunction is defined, all defined array elements are sorted according to the return value of compareFunction.
+  // If compareFunction is defined, all undefined elements should be sent to the end of the array., with no call to compareFunction.
+  // If compareFunction(a, b) is less than 0, it should sort a to an index lower than b (i.e. a comes first).
+  // If compareFunction(a, b) returns 0, it should leave a and b unchanged with respect to each other, but sorted with respect to all different elements.
+  // If compareFunction(a, b) is greater than 0, it should sort b to an index lower than a (i.e. b comes first).
+  // compareFunction(a, b) should always return the same value when given a specific pair of elements a and b as its two arguments.
+  // It should sort strings with non-ASCII characters, i.e. strings with accented characters (e, é, è, a, ä, etc.), strings from languages other than English.
 
 
 // This is where the function will go.
+
+function sort(array, compareFunction){
+  var length = array.length;
+
+  if (compareFunction === undefined) {
+    for (var i=0; i < length; i++) { // loop through each element of the array
+      var j = (i+1); // set variable for the 2nd element to compare
+
+      var firstString = String(array[i]); // convert each element to a string
+      var secondString = String(array[j]); // convert each element to a string
+
+      var firstItem = firstString.codePointAt(); // convert each element to a unicode value
+      var secondItem = secondString.codePointAt();  // convert each element to a  unicode value
+
+      if (firstItem > secondItem) { // if firstItem is greater than secondItem, the their indices should be flipped.
+        var holdFirstItem = array[i]; // hold array[i] in a temporary variable
+        var holdSecondItem = array[j]; // hold array[j] in a temporary variable
+        array[i] = holdSecondItem; // switch the values of the indices
+        array[j] = holdFirstItem;
+      } else if (firstItem < secondItem) { // if firstItem is less then secondItem, then their indices should remain unchanged.
+        array[i] = array[i];
+        array[j] = array[j];
+      }
+      j++;
+    }
+    return array
+  }
+}
 
 
 // This is where the tests will go.
 
 tests ({
 
-  'This is a test.':function(){
+  'It should return an array.':function(){
+    var array = [0,1,2];
+    var returnValueOfSort = sort(array);
+    eq(Array.isArray(returnValueOfSort), true);
+  },
+
+  'It should return the original array, not a copy.':function(){
+    var array = [0,1,2];
+    var returnValueOfSort = sort(array);
+    eq(returnValueOfSort, array);
+  },
+
+  'If compareFunction is undefined, the array should be sorted according to each defined character\'s Unicode code point value, according to the string conversion of each element.':function(){
+    var array = ["cherry", "banana"];
+    var returnValueOfSort = sort(array);
+    eq(returnValueOfSort[0], "banana");
+    eq(returnValueOfSort[1], "cherry");
+  },
+
+  'It compareFunction is undefined, all undefined elements should be sent to the end of the array.':function(){
     fail();
-  }
+  },
 
 })
 
