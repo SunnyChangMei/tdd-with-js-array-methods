@@ -44,28 +44,13 @@
   // "cherry".codePointAt();
     // returns 99
 
-// Compare Function
-
-  // function compare(a, b) {
-  //   var comparision = a-b
-  //   if (comparision < 0) {
-  //     return -1;
-  //   }
-  //   if (comparision > 0) {
-  //     return 1;
-  //   }
-  //   if (comparision === 0) {
-  //     return 0;
-  //   }
-  // }
-
-
 // Requirements:
 
   // It should return the array.
   // It should return the original array, not a copy.
   // If compareFunction is undefined, the array should be sorted according to each defined character's Unicode code point value, according to the string conversion of each element.
   // It compareFunction is undefined, all undefined elements should be sent to the end of the array.
+
   // If compareFunction is defined, all defined array elements are sorted according to the return value of compareFunction.
   // If compareFunction is defined, all undefined elements should be sent to the end of the array., with no call to compareFunction.
   // If compareFunction(a, b) is less than 0, it should sort a to an index lower than b (i.e. a comes first).
@@ -75,6 +60,22 @@
   // It should sort strings with non-ASCII characters, i.e. strings with accented characters (e, é, è, a, ä, etc.), strings from languages other than English.
 
 
+
+  // Compare Function
+
+function compare(a, b) {
+  var comparision = a-b
+  if (comparision < 0) {
+    return -1;
+  }
+  if (comparision > 0) {
+    return 1;
+  }
+  if (comparision === 0) {
+    return 0;
+  }
+}
+
 // This is where the function will go.
 
 function sort(array, compareFunction){
@@ -83,6 +84,13 @@ function sort(array, compareFunction){
   if (compareFunction === undefined) {
     for (var i=0; i < length; i++) { // loop through each element of the array
       var j = (i+1); // set variable for the 2nd element to compare
+
+      // if element is a hole, move to the end
+      if (array[i] === undefined) {
+        array.push(array.splice(i, 1)[0]);
+        continue;
+      }
+
 
       var firstString = String(array[i]); // convert each element to a string
       var secondString = String(array[j]); // convert each element to a string
@@ -130,7 +138,15 @@ tests ({
   },
 
   'It compareFunction is undefined, all undefined elements should be sent to the end of the array.':function(){
-    fail();
+    var array = [1,,2];
+    var returnValueOfSort = sort(array);
+    eq(returnValueOfSort[0], 1);
+    eq(returnValueOfSort[1], 2);
+    eq(returnValueOfSort[2], undefined);
+  },
+
+  'If compareFunction is defined, all defined array elements are sorted according to the return value of compareFunction.':function(){
+
   },
 
 })
