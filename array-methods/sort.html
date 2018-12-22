@@ -78,41 +78,42 @@ function compare(a, b) {
 
 // This is where the function will go.
 
+
 function sort(array, compareFunction){
   var length = array.length;
 
-  if (compareFunction === undefined) {
-    for (var i=0; i < length; i++) { // loop through each element of the array
-      var j = (i+1); // set variable for the 2nd element to compare
-
-      // if element is a hole, move to the end
-      if (array[i] === undefined) {
-        array.push(array.splice(i, 1)[0]);
-        continue;
-      }
-
-
-      var firstString = String(array[i]); // convert each element to a string
-      var secondString = String(array[j]); // convert each element to a string
-
-      var firstItem = firstString.codePointAt(); // convert each element to a unicode value
-      var secondItem = secondString.codePointAt();  // convert each element to a  unicode value
-
-      if (firstItem > secondItem) { // if firstItem is greater than secondItem, the their indices should be flipped.
-        var holdFirstItem = array[i]; // hold array[i] in a temporary variable
-        var holdSecondItem = array[j]; // hold array[j] in a temporary variable
-        array[i] = holdSecondItem; // switch the values of the indices
-        array[j] = holdFirstItem;
-      } else if (firstItem < secondItem) { // if firstItem is less then secondItem, then their indices should remain unchanged.
-        array[i] = array[i];
-        array[j] = array[j];
-      }
-      j++;
-    }
-    return array
+  // if first element is a hole, move to the end
+  while (array[0] === undefined) {
+    array.push(array.splice(i, 1)[0]);
   }
-}
 
+  for (var i = 0; i < length; i++){  // loop over each i in the array
+    for (var j = 1; j < length; j++){  // loop over each j in the array
+
+      var leftValue = String(array[j-1]).codePointAt();   // convert to a string and the convert to a point value
+      var rightValue = String(array[j]).codePointAt();    // convert to a string and the convert to a point value
+
+      if (leftValue > rightValue) {  // if the item before j is greater than j, then flip them
+        var holdFirstItem = array[j-1]; // hold array[i] in a temporary variable
+        var holdSecondItem = array[j]; // hold array[i] in a temporary variable
+        array[j-1] = holdSecondItem; // give first element the value of second element
+        array[j] = holdFirstItem; // give second element the value of the first from storage
+      }
+
+      // if left element is a hole, move to the end
+      if (array[j-1] === undefined) {
+        array.push(array.splice(j-1, 1)[0]);
+      }
+
+      // if right element is a hole, move to the end
+      if (array[j] === undefined) {
+        array.push(array.splice(j, 1)[0]);
+      }
+
+    }
+  }
+  return array;
+}
 
 // This is where the tests will go.
 
@@ -131,22 +132,32 @@ tests ({
   },
 
   'If compareFunction is undefined, the array should be sorted according to each defined character\'s Unicode code point value, according to the string conversion of each element.':function(){
-    var array = ["cherry", "banana"];
+    var array = ["cherry",9,"banana",5,"apple"];
     var returnValueOfSort = sort(array);
-    eq(returnValueOfSort[0], "banana");
-    eq(returnValueOfSort[1], "cherry");
+    eq(returnValueOfSort[0], 5);
+    eq(returnValueOfSort[1], 9);
+    eq(returnValueOfSort[2], "apple");
+    eq(returnValueOfSort[3], "banana");
+    eq(returnValueOfSort[4], "cherry");
   },
 
+
   'It compareFunction is undefined, all undefined elements should be sent to the end of the array.':function(){
-    var array = [1,,2];
+    // length will be 7
+    // [1, 2, "cherry", "undefined", "zebra", empty, empty]
+    var array = [,1,,'zebra',2,'undefined','cherry'];
     var returnValueOfSort = sort(array);
+    eq(returnValueOfSort.length, 7);
     eq(returnValueOfSort[0], 1);
     eq(returnValueOfSort[1], 2);
-    eq(returnValueOfSort[2], undefined);
+    eq(returnValueOfSort[2], 'cherry');
+    eq(returnValueOfSort[3], 'undefined');
+    eq(returnValueOfSort[4], 'zebra');
+    eq(returnValueOfSort[5], undefined);
+    eq(returnValueOfSort[6], undefined);
   },
 
   'If compareFunction is defined, all defined array elements are sorted according to the return value of compareFunction.':function(){
-
   },
 
 })
