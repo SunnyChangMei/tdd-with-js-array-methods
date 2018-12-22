@@ -82,37 +82,45 @@ function compare(a, b) {
 function sort(array, compareFunction){
   var length = array.length;
 
-  // if first element is a hole, move to the end
-  while (array[0] === undefined) {
-    array.push(array.splice(i, 1)[0]);
-  }
 
-  for (var i = 0; i < length; i++){  // loop over each i in the array
-    for (var j = 1; j < length; j++){  // loop over each j in the array
+  if (compareFunction) {
 
-      var leftValue = String(array[j-1]).codePointAt();   // convert to a string and the convert to a point value
-      var rightValue = String(array[j]).codePointAt();    // convert to a string and the convert to a point value
+    console.log('hi!');
 
-      if (leftValue > rightValue) {  // if the item before j is greater than j, then flip them
-        var holdFirstItem = array[j-1]; // hold array[i] in a temporary variable
-        var holdSecondItem = array[j]; // hold array[i] in a temporary variable
-        array[j-1] = holdSecondItem; // give first element the value of second element
-        array[j] = holdFirstItem; // give second element the value of the first from storage
-      }
+  } else { // if compareFunction is not defined do this 
 
-      // if left element is a hole, move to the end
-      if (array[j-1] === undefined) {
-        array.push(array.splice(j-1, 1)[0]);
-      }
-
-      // if right element is a hole, move to the end
-      if (array[j] === undefined) {
-        array.push(array.splice(j, 1)[0]);
-      }
-
+    // if first element is a hole, move to the end
+    while (array[0] === undefined) {
+      array.push(array.splice(i, 1)[0]);
     }
+
+    for (var i = 0; i < length; i++){  // loop over each i in the array
+      for (var j = 1; j < length; j++){  // loop over each j in the array
+
+        var leftValue = String(array[j-1]).codePointAt();   // convert to a string and the convert to a point value
+        var rightValue = String(array[j]).codePointAt();    // convert to a string and the convert to a point value
+
+        if (leftValue > rightValue) {  // if the item before j is greater than j, then flip them
+          var holdFirstItem = array[j-1]; // hold array[i] in a temporary variable
+          var holdSecondItem = array[j]; // hold array[i] in a temporary variable
+          array[j-1] = holdSecondItem; // give first element the value of second element
+          array[j] = holdFirstItem; // give second element the value of the first from storage
+        }
+
+        // if left element is a hole, move to the end
+        if (array[j-1] === undefined) {
+          array.push(array.splice(j-1, 1)[0]);
+        }
+
+        // if right element is a hole, move to the end
+        if (array[j] === undefined) {
+          array.push(array.splice(j, 1)[0]);
+        }
+
+      }
+    }
+    return array;
   }
-  return array;
 }
 
 // This is where the tests will go.
