@@ -87,7 +87,7 @@ function sort(array, compareFunction){
 
     console.log('hi!');
 
-  } else { // if compareFunction is not defined do this 
+  } else { // if compareFunction is not defined do this
 
     // if first element is a hole, move to the end
     while (array[0] === undefined) {
@@ -149,6 +149,15 @@ tests ({
     eq(returnValueOfSort[4], "cherry");
   },
 
+  'If compareFunction is undefined, the array should be sorted according to each defined character\'s Unicode code point value, according to the string conversion of each element.':function(){
+    debugger;
+    var array = ['Blue', 'Humpback', 'Beluga'];
+    var returnValueOfSort = sort(array);
+    eq(returnValueOfSort[0], 'Beluga');
+    eq(returnValueOfSort[1], 'Blue');
+    eq(returnValueOfSort[2], 'Humpback');
+  },
+
 
   'It compareFunction is undefined, all undefined elements should be sent to the end of the array.':function(){
     // length will be 7
@@ -167,6 +176,8 @@ tests ({
 
   'If compareFunction is defined, all defined array elements are sorted according to the return value of compareFunction.':function(){
   },
+
+
 
 })
 
