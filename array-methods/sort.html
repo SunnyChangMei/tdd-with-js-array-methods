@@ -63,7 +63,7 @@
 
   // Compare Function
 
-function compare(a, b) {
+function compareFunction(a, b) {
   var comparision = a-b
   if (comparision < 0) {
     return -1;
@@ -83,11 +83,40 @@ function sort(array, compareFunction){
   var length = array.length;
 
 
-  if (compareFunction) {
+  if (compareFunction) { // if compareFunction is defined to this
 
-    console.log('hi!');
 
-  } else { // if compareFunction is not defined do this
+    for (var i = 0; i < length; i++){  // loop over each i in the array
+      for (var j = 1; j < length; j++){  // loop over each j in the array
+
+        var leftValue = String(array[j-1]);   // convert to a string
+        var rightValue = String(array[j]);    // convert to a string
+
+
+        var returnOfCompare = compareFunction(leftValue, rightValue);
+        
+        if (returnOfCompare > 0) {  // if the return of the compare function is greater than 0 then the two element need to be flipped
+          var holdFirstItem = array[j-1]; // hold array[i] in a temporary variable
+          var holdSecondItem = array[j]; // hold array[i] in a temporary variable
+          array[j-1] = holdSecondItem; // give first element the value of second element
+          array[j] = holdFirstItem; // give second element the value of the first from storage
+        }
+
+        // if left element is a hole, move to the end
+        if (array[j-1] === undefined) {
+          array.push(array.splice(j-1, 1)[0]);
+        }
+
+        // if right element is a hole, move to the end
+        if (array[j] === undefined) {
+          array.push(array.splice(j, 1)[0]);
+        }
+
+      }
+    }
+    return array;
+
+  } else { // if compareFunction is not defined do this instead
 
     // if first element is a hole, move to the end
     while (array[0] === undefined) {
@@ -221,7 +250,13 @@ tests ({
     eq(returnValueOfSort[6], undefined);
   },
 
-  'If compareFunction is defined, all defined array elements are sorted according to the return value of compareFunction.':function(){
+  'If compareFunction is defined, an array of numbers should be sorted according to the return value of compareFunction.':function(){
+    var array = [40, 1, 5, 200];
+    var returnValueOfSort = sort(array, compareFunction);
+    eq(returnValueOfSort[0], 1);
+    eq(returnValueOfSort[1], 5);
+    eq(returnValueOfSort[2], 40);
+    eq(returnValueOfSort[3], 200);
   },
 
 
