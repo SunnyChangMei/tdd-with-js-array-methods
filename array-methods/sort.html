@@ -149,13 +149,22 @@ tests ({
     eq(returnValueOfSort[4], "cherry");
   },
 
-  'If compareFunction is undefined, the array should be sorted according to each defined character\'s Unicode code point value, according to the string conversion of each element.':function(){
+  'If compareFunction is undefined, strings that have the same first character should also be sorted properly.':function(){
     var array = ['Blue', 'Humpback', 'Beluga'];
     var returnValueOfSort = sort(array);
     eq(returnValueOfSort[0], 'Beluga');
     eq(returnValueOfSort[1], 'Blue');
     eq(returnValueOfSort[2], 'Humpback');
   },
+
+  'If compareFunction is undefined, numbers in string format should be properly sorted.':function(){
+    var array = ['80', '9', '700'];
+    var returnValueOfSort = sort(array);
+    eq(returnValueOfSort[0], '700');
+    eq(returnValueOfSort[1], '80');
+    eq(returnValueOfSort[2], '9');
+  },
+
 
 
   'It compareFunction is undefined, all undefined elements should be sent to the end of the array.':function(){
