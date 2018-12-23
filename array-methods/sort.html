@@ -165,6 +165,45 @@ tests ({
     eq(returnValueOfSort[2], '9');
   },
 
+  'If compareFunction is undefined, a number should be converted to a string and then be properly sorted.':function(){
+    var array = [40, 1, 5, 200];
+    var returnValueOfSort = sort(array);
+    eq(returnValueOfSort[0], 1);
+    eq(returnValueOfSort[1], 200);
+    eq(returnValueOfSort[2], 40);
+    eq(returnValueOfSort[3], 5);
+  },
+
+  'If compareFunction is undefined, with a mix of numbers and numbers as strings, they should be properly sorted.':function(){
+    var array = ['80', '9', '700', 40, 1, 5, 200];
+    var returnValueOfSort = sort(array);
+    eq(returnValueOfSort[0], 1);
+    eq(returnValueOfSort[1], 200);
+    eq(returnValueOfSort[2], 40);
+    eq(returnValueOfSort[3], 5);
+    eq(returnValueOfSort[4], '700');
+    eq(returnValueOfSort[5], '80');
+    eq(returnValueOfSort[6], '9');
+  },
+
+  'If compareFunction is undefined, it should properly sort strings that include non-ACII characters.':function(){
+    var array = ['réservé', 'premier', 'cliché', 'communiqué', 'café', 'adieu'];
+    var returnValueOfSort = sort(array);
+    eq(returnValueOfSort[0], 'adieu');
+    eq(returnValueOfSort[1], 'café');
+    eq(returnValueOfSort[2], 'cliché');
+    eq(returnValueOfSort[3], 'communiqué');
+    eq(returnValueOfSort[4], 'premier');
+    eq(returnValueOfSort[5], 'réservé');
+  },
+
+  'If compareFunction is undefined, it should properly sort strings that are similar with exception of a non-ACII character difference.':function(){
+    var array = ['café', 'cafe'];
+    var returnValueOfSort = sort(array);
+    eq(returnValueOfSort[0], 'cafe');
+    eq(returnValueOfSort[1], 'café');
+  },
+
 
 
   'It compareFunction is undefined, all undefined elements should be sent to the end of the array.':function(){
