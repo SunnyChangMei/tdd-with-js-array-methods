@@ -94,7 +94,7 @@ function sort(array, compareFunction){
 
 
         var returnOfCompare = compareFunction(leftValue, rightValue);
-        
+
         if (returnOfCompare > 0) {  // if the return of the compare function is greater than 0 then the two element need to be flipped
           var holdFirstItem = array[j-1]; // hold array[i] in a temporary variable
           var holdSecondItem = array[j]; // hold array[i] in a temporary variable
@@ -259,7 +259,33 @@ tests ({
     eq(returnValueOfSort[3], 200);
   },
 
+  'If compareFunction is defined, an array of numbers represented as strings should be sorted according to the return value of compareFunction.':function(){
+    var array = ['80', '9', '700'];
+    var returnValueOfSort = sort(array, compareFunction);
+    eq(returnValueOfSort[0], '9');
+    eq(returnValueOfSort[1], '80');
+    eq(returnValueOfSort[2], '700');
+  },
 
+  'If compareFunction is defined, with a mix of numbers and numbers as strings, they should be properly sorted.':function(){
+    var array = ['80', '9', '700', 40, 1, 5, 200];
+    var returnValueOfSort = sort(array, compareFunction);
+    eq(returnValueOfSort[0], 1);
+    eq(returnValueOfSort[1], 5);
+    eq(returnValueOfSort[2], '9');
+    eq(returnValueOfSort[3], 40);
+    eq(returnValueOfSort[4], '80');
+    eq(returnValueOfSort[5], 200);
+    eq(returnValueOfSort[6], '700');
+  },
+
+  'If compareFunction is defined, all undefined elements should be sent to the end of the array., with no call to compareFunction.':function(){
+    var array = [1,,2];
+    var returnValueOfSort = sort(array, compareFunction);
+    eq(returnValueOfSort[0], 1);
+    eq(returnValueOfSort[1], 2);
+    eq(returnValueOfSort[2], undefined);
+  }
 
 })
 
