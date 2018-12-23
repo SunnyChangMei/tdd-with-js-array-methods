@@ -97,10 +97,10 @@ function sort(array, compareFunction){
     for (var i = 0; i < length; i++){  // loop over each i in the array
       for (var j = 1; j < length; j++){  // loop over each j in the array
 
-        var leftValue = String(array[j-1]).codePointAt();   // convert to a string and the convert to a point value
-        var rightValue = String(array[j]).codePointAt();    // convert to a string and the convert to a point value
+        var leftValue = String(array[j-1]);   // convert to a string
+        var rightValue = String(array[j]);    // convert to a string
 
-        if (leftValue > rightValue) {  // if the item before j is greater than j, then flip them
+        if (leftValue.localeCompare(rightValue) === 1) {  // if the item before j is greater than j, then flip them
           var holdFirstItem = array[j-1]; // hold array[i] in a temporary variable
           var holdSecondItem = array[j]; // hold array[i] in a temporary variable
           array[j-1] = holdSecondItem; // give first element the value of second element
@@ -150,7 +150,6 @@ tests ({
   },
 
   'If compareFunction is undefined, the array should be sorted according to each defined character\'s Unicode code point value, according to the string conversion of each element.':function(){
-    debugger;
     var array = ['Blue', 'Humpback', 'Beluga'];
     var returnValueOfSort = sort(array);
     eq(returnValueOfSort[0], 'Beluga');
