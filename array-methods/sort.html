@@ -38,26 +38,36 @@
 
 // Notes
 
+
+  // **No longer using codepoint but instead using localeCompare
+
   // Use codePointAt() to get the unicode value of a string, example:
   // "banana".codePointAt();
     // returns 98
   // "cherry".codePointAt();
     // returns 99
 
+
 // Requirements:
 
   // It should return the array.
   // It should return the original array, not a copy.
   // If compareFunction is undefined, the array should be sorted according to each defined character's Unicode code point value, according to the string conversion of each element.
+  // If compareFunction is undefined, strings that have the same first character should also be sorted properly.
+  // If compareFunction is undefined, numbers in string format should be properly sorted.
+  // If compareFunction is undefined, a number should be converted to a string and then be properly sorted.
+  // If compareFunction is undefined, with a mix of numbers and numbers as strings, they should be properly sorted.
+  // If compareFunction is undefined, it should properly sort strings that include non-ACII characters.
+  // If compareFunction is undefined, it should properly sort strings that are similar with exception of a non-ACII character difference.
   // It compareFunction is undefined, all undefined elements should be sent to the end of the array.
-
-  // If compareFunction is defined, all defined array elements are sorted according to the return value of compareFunction.
-  // If compareFunction is defined, all undefined elements should be sent to the end of the array., with no call to compareFunction.
   // If compareFunction(a, b) is less than 0, it should sort a to an index lower than b (i.e. a comes first).
   // If compareFunction(a, b) returns 0, it should leave a and b unchanged with respect to each other, but sorted with respect to all different elements.
   // If compareFunction(a, b) is greater than 0, it should sort b to an index lower than a (i.e. b comes first).
-  // compareFunction(a, b) should always return the same value when given a specific pair of elements a and b as its two arguments.
-  // It should sort strings with non-ASCII characters, i.e. strings with accented characters (e, é, è, a, ä, etc.), strings from languages other than English.
+  // If compareFunction is defined, an array of numbers should be sorted according to the return value of compareFunction.
+  // If compareFunction is defined, an array of numbers represented as strings should be sorted according to the return value of compareFunction.
+  // If compareFunction is defined, with a mix of numbers and numbers as strings, they should be properly sorted.
+  // If compareFunction is defined, all undefined elements should be sent to the end of the array., with no call to compareFunction.
+
 
 
 
@@ -233,11 +243,7 @@ tests ({
     eq(returnValueOfSort[1], 'café');
   },
 
-
-
   'It compareFunction is undefined, all undefined elements should be sent to the end of the array.':function(){
-    // length will be 7
-    // [1, 2, "cherry", "undefined", "zebra", empty, empty]
     var array = [,1,,'zebra',2,'undefined','cherry'];
     var returnValueOfSort = sort(array);
     eq(returnValueOfSort.length, 7);
@@ -248,6 +254,27 @@ tests ({
     eq(returnValueOfSort[4], 'zebra');
     eq(returnValueOfSort[5], undefined);
     eq(returnValueOfSort[6], undefined);
+  },
+
+  'If compareFunction(a, b) is less than 0, it should sort a to an index lower than b (i.e. a comes first).':function(){
+    var array = [1,2];
+    var returnValueOfSort = sort(array, compareFunction);
+    eq(returnValueOfSort[0], 1);
+    eq(returnValueOfSort[1], 2);
+  },
+
+  'If compareFunction(a, b) returns 0, it should leave a and b unchanged with respect to each other, but sorted with respect to all different elements.':function(){
+    var array = [1,1];
+    var returnValueOfSort = sort(array, compareFunction);
+    eq(returnValueOfSort[0], 1);
+    eq(returnValueOfSort[1], 1);
+  },
+
+  'If compareFunction(a, b) is greater than 0, it should sort b to an index lower than a (i.e. b comes first).':function(){
+    var array = [2,1];
+    var returnValueOfSort = sort(array, compareFunction);
+    eq(returnValueOfSort[0], 1);
+    eq(returnValueOfSort[1], 2);
   },
 
   'If compareFunction is defined, an array of numbers should be sorted according to the return value of compareFunction.':function(){
@@ -285,6 +312,10 @@ tests ({
     eq(returnValueOfSort[0], 1);
     eq(returnValueOfSort[1], 2);
     eq(returnValueOfSort[2], undefined);
+  },
+
+  'If compareFunction is defined, objects should be sorted by the value of its properties.':function(){
+
   }
 
 })
