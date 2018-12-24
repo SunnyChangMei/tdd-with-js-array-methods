@@ -1,0 +1,75 @@
+<script src="../simpletest.js"></script>
+<script>
+
+// Docs:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+
+// Specs:
+  // https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.splice
+
+// Description:
+  // The splice() method changes the contents of an array
+  // by removing or replacing existing elements and/or adding new elements.
+
+
+// The Steps
+  // 1 write requirements based on docs
+  // 2 write description for test
+  // 3 write test to fail
+  // 4 write code to make the test pass
+  // 5 repeat
+
+// Function Signature:
+  // splice(array,start[, deleteCount[, item1[, item2[,...]]]])
+
+
+// Parameters:
+  // array - the array being operated on
+  // start - the index at which to begin changing the array
+  // deleteCount - the number of array elements to remove (optional)
+  // itemN - the elements to add to the array (optional)
+
+
+
+// Return Value:
+  // An array containing the deleted elements.
+  // If only one element is removed, an array of one element is returned.
+  // If no elements are removed, an empty array is returned.
+
+
+// Requirements:
+  // It should accept an array as the first argument.
+  // If start is greater than the length of the array, start should be set to the array.length.
+  // If start is negative, it should begin that many elements from the end of the array.
+  // If start is negative and the absolute value is greater than array.length, then start should be 0.
+  // If deleteCount is undefined, then all elements should be deleted.
+  // If deleteCount is greater than the number of elements left in the array, then all elements should be deleted.
+  // If deleteCount is 0, no elements should be removed.
+  // If deleteCount is negative, no elements should be removed.
+  // If itemN is provided, these items should be added to the array at start index.
+  // If itemN is not provided, only elements will be removed from the array.
+  // It should return an array containing the deleted elements.
+  // If only one element is removed, an array of one element should be returned.
+  // If no elements are removed, an empty array should be returned.
+  // If the number of elements to insert is different than the number being removed, the array should have a different length at the end of the call.
+
+
+
+
+
+
+// This is where the function will go.
+
+
+// This is where the tests will go.
+
+tests({
+
+  'Testing.':function(){
+    fail();
+  }
+
+
+})
+
+</script>
