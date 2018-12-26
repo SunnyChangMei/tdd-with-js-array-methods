@@ -38,37 +38,207 @@
 
 
 // Requirements:
-  // It should accept an array as the first argument.
+  // It should return an array.
+  // It should return an array containing the deleted elements.
+  // If start is undefined, nothing is deleted.
+  // If start is defined, it should begin deleting elements at this index through the end of the array.
   // If start is greater than the length of the array, start should be set to the array.length.
   // If start is negative, it should begin that many elements from the end of the array.
   // If start is negative and the absolute value is greater than array.length, then start should be 0.
   // If deleteCount is undefined, then all elements should be deleted.
-  // If deleteCount is greater than the number of elements left in the array, then all elements should be deleted.
   // If deleteCount is 0, no elements should be removed.
+  // If deleteCount is greater than the number of elements left in the array, then all elements should be deleted.
   // If deleteCount is negative, no elements should be removed.
-  // If itemN is provided, these items should be added to the array at start index.
-  // If itemN is not provided, only elements will be removed from the array.
-  // It should return an array containing the deleted elements.
+  // If deleteCount is defined, only remove that number of elements.
   // If only one element is removed, an array of one element should be returned.
   // If no elements are removed, an empty array should be returned.
+  // If itemN is undefined, only elements will be removed from the array.
+
+  // If itemN is defined, it should be added to the array at start.
   // If the number of elements to insert is different than the number being removed, the array should have a different length at the end of the call.
 
 
-
-
-
-
 // This is where the function will go.
+
+function splice(array, start, deleteCount, itemN){
+  var length = array.length;
+  var deletedItems = [];
+  var indexToStartDeleting = start;
+  var itemCountToDelete = deleteCount;
+  var itemN = itemN;
+
+  if (start === undefined) {
+    return deletedItems;
+  }
+
+  if (itemCountToDelete > (length - indexToStartDeleting) ) {
+    indexToStartDeleting = 0;
+    itemCountToDelete = length;
+  }
+
+  if (indexToStartDeleting > length) {
+    indexToStartDeleting = length; // 2
+  }
+
+  if ( (indexToStartDeleting < 0) && (Math.abs(indexToStartDeleting) > length) ) {
+    indexToStartDeleting = 0;
+  }
+
+  if (indexToStartDeleting < 0) {
+    indexToStartDeleting = length + indexToStartDeleting;
+  }
+
+  if (itemCountToDelete === undefined) {
+    itemCountToDelete = length;
+  }
+
+  if (itemCountToDelete === 0) {
+    return deletedItems;
+  }
+
+  if (itemCountToDelete < 0) {
+    return deletedItems;
+  }
+
+  for (var i = indexToStartDeleting; i < itemCountToDelete; i++) {
+    deletedItems.push(array[i]);
+  }
+
+  return deletedItems;
+}
 
 
 // This is where the tests will go.
 
 tests({
 
-  'Testing.':function(){
-    fail();
-  }
+  'It should return an array.':function(){
+    var array = [0,1];
+    var returnValueOfSplice = splice(array);
+    eq(Array.isArray(returnValueOfSplice), true);
+  },
 
+  'It should return an array containing the deleted elements.':function(){
+    var array = [0,1];
+    var returnValueOfSplice = splice(array);
+    eq(returnValueOfSplice[0], undefined);
+  },
+
+  'If start is undefined, nothing is deleted.':function(){
+    var array = [0,1];
+    var returnValueOfSplice = splice(array, undefined);
+    eq(returnValueOfSplice[0], undefined);
+  },
+
+  'If start is defined, it should begin deleting elements at this index through the end of the array.':function(){
+    var array = [0,1];
+    var start = 0;
+    var returnValueOfSplice = splice(array, start);
+    eq(returnValueOfSplice[0], 0);
+    eq(returnValueOfSplice[1], 1);
+  },
+
+  'If start is greater than the length of the array, start should be set to the array.length.':function(){
+    var array = [0,1];
+    var start = 5;
+    var returnValueOfSplice = splice(array, start);
+    eq(returnValueOfSplice[0], undefined);
+  },
+
+  'If start is negative, it should begin that many elements from the end of the array.':function(){
+    var array = [0,1];
+    var start = -2;
+    var returnValueOfSplice = splice(array, start);
+    eq(returnValueOfSplice[0], 0);
+    eq(returnValueOfSplice[1], 1);
+  },
+
+  'If start is negative and the absolute value is greater than array.length, then start should be 0.':function(){
+    var array = [0,1];
+    var start = -3;
+    var returnValueOfSplice = splice(array, start);
+    eq(returnValueOfSplice[0], 0);
+    eq(returnValueOfSplice[1], 1);
+  },
+
+  'If deleteCount is undefined, then all elements should be deleted.':function(){
+    var array = [0,1];
+    var start = 0;
+    var deleteCount = undefined;
+    var returnValueOfSplice = splice(array, start, deleteCount);
+    eq(returnValueOfSplice[0], 0);
+    eq(returnValueOfSplice[1], 1);
+  },
+
+  'If deleteCount is 0, no elements should be removed.':function(){
+    var array = [0,1];
+    var start = 0;
+    var deleteCount = 0;
+    var returnValueOfSplice = splice(array, start, deleteCount);
+    eq(returnValueOfSplice[0], undefined);
+  },
+
+  'If deleteCount is greater than the number of elements left in the array, then all elements should be deleted.':function(){
+    var array = [0,1];
+    var start = 0;
+    var deleteCount = 3;
+    var returnValueOfSplice = splice(array, start, deleteCount);
+    eq(returnValueOfSplice[0], 0);
+    eq(returnValueOfSplice[1], 1);
+  },
+
+  'If deleteCount is negative, no elements should be removed.':function(){
+    var array = [0,1];
+    var start = 0;
+    var deleteCount = -1;
+    var returnValueOfSplice = splice(array, start, deleteCount);
+    eq(returnValueOfSplice[0], undefined);
+  },
+
+  'If deleteCount is defined, only remove that number of elements.':function(){
+    var array = [0,1];
+    var start = 0;
+    var deleteCount = 1;
+    var returnValueOfSplice = splice(array, start, deleteCount);
+    eq(returnValueOfSplice[0], 0);
+    eq(returnValueOfSplice[1], undefined);
+  },
+
+  'If only one element is removed, an array of one element should be returned.':function(){
+    var array = [0,1];
+    var start = 0;
+    var deleteCount = 1;
+    var returnValueOfSplice = splice(array, start, deleteCount);
+    eq(returnValueOfSplice.length, 1);
+  },
+
+  'If no elements are removed, an empty array should be returned.':function(){
+    var array = [0,1];
+    var start = 0;
+    var deleteCount = 0;
+    var returnValueOfSplice = splice(array, start, deleteCount);
+    eq(returnValueOfSplice.length, 0);
+  },
+
+  'If itemN is undefined, only elements will be removed from the array.':function(){
+    var array = [0,1];
+    var start = 0;
+    var deleteCount = 1;
+    var itemN = undefined;
+    var returnValueOfSplice = splice(array, start, deleteCount);
+    eq(returnValueOfSplice.length, 1);
+  },
+
+  'If itemN is defined, it should be added to the array at start.':function(){
+    var array = [0,1];
+    var start = 0;
+    var deleteCount = 0;
+    var itemN = 'cat';
+    var returnValueOfSplice = splice(array, start, deleteCount);
+    eq(returnValueOfSplice[0], 'cat');
+    eq(returnValueOfSplice[1], 0);
+    eq(returnValueOfSplice[2], 1);
+  }
 
 })
 
