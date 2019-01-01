@@ -65,7 +65,25 @@ function splice(array, start, deleteCount, itemN){
   var deletedItems = [];
   var indexToStartDeleting = start;
   var itemCountToDelete = deleteCount;
-  var itemN = itemN;
+
+  if (itemN) {
+    // get the number of elements in array of itemN
+    // save this to variable called itemNCount
+    var itemNCount = 1;
+    // create a variable called endIndex to store end position of array
+    var moveIndex = array.length-1;
+    // beginning at moveThis, and while moveThis > start
+    // create array[moveThis + itemNCount] = moveThis
+    // decrement moveThis
+    for (moveIndex; moveIndex >= start; moveIndex--) {
+      array[moveIndex + itemNCount] = array[moveIndex]
+    }
+
+    // add itemN to array[start];
+    array[start] = itemN;
+
+
+  }
 
   if (start === undefined) {
     return deletedItems;
@@ -234,10 +252,10 @@ tests({
     var start = 0;
     var deleteCount = 0;
     var itemN = 'cat';
-    var returnValueOfSplice = splice(array, start, deleteCount);
-    eq(returnValueOfSplice[0], 'cat');
-    eq(returnValueOfSplice[1], 0);
-    eq(returnValueOfSplice[2], 1);
+    var returnValueOfSplice = splice(array, start, deleteCount, itemN);
+    eq(array[0], 'cat');
+    eq(array[1], 0);
+    eq(array[2], 1);
   }
 
 })
