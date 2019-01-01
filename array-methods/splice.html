@@ -53,8 +53,8 @@
   // If only one element is removed, an array of one element should be returned.
   // If no elements are removed, an empty array should be returned.
   // If itemN is undefined, only elements will be removed from the array.
-
   // If itemN is defined, it should be added to the array at start.
+  // If itemN is more than 1 elements, these should each be added to the array beginning at start.
   // If the number of elements to insert is different than the number being removed, the array should have a different length at the end of the call.
 
 
@@ -69,7 +69,7 @@ function splice(array, start, deleteCount, itemN){
   if (itemN) {
     // get the number of elements in array of itemN
     // save this to variable called itemNCount
-    var itemNCount = 1;
+    var itemNCount = arguments.length - 3;
     // create a variable called endIndex to store end position of array
     var moveIndex = array.length-1;
     // beginning at moveThis, and while moveThis > start
@@ -79,9 +79,12 @@ function splice(array, start, deleteCount, itemN){
       array[moveIndex + itemNCount] = array[moveIndex]
     }
 
-    // add itemN to array[start];
-    array[start] = itemN;
-
+    // inserts each of itemN into the array at start index
+    var currentItemIndex = 3; // first itemN is the 3rd element of the arguments array
+    for (start; start < itemNCount; start++) {
+      array[start] = arguments[currentItemIndex];
+      currentItemIndex++;
+    }
 
   }
 
@@ -256,7 +259,46 @@ tests({
     eq(array[0], 'cat');
     eq(array[1], 0);
     eq(array[2], 1);
-  }
+  },
+
+  'If itemN is more than 1 elements, these should each be added to the array beginning at start.':function(){
+    var array = [0,1];
+    var start = 0;
+    var deleteCount = 0;
+    var itemN = 'cat';
+    var itemN2 = 'dog';
+    var returnValueOfSplice = splice(array, start, deleteCount, itemN, itemN2);
+    eq(array[0], 'cat');
+    eq(array[1], 'dog');
+    eq(array[2], 0);
+    eq(array[3], 1);
+  },
+
+  'If itemN is more than 1 elements, and a deleteCount is defined, it should splice properly.':function(){
+    var array = [0,1];
+    var start = 0;
+    var deleteCount = 1;
+    var itemN = 'cat';
+    var itemN2 = 'dog';
+    var returnValueOfSplice = splice(array, start, deleteCount, itemN, itemN2);
+    eq(array[0], 'cat');
+    eq(array[1], 'dog');
+    eq(array[3], 1);
+  },
+
+  'If itemN is more than 1 elements, and a start is defined, it should splice properly.':function(){
+    var array = [0,1];
+    var start = 1;
+    var deleteCount = 0;
+    var itemN = 'cat';
+    var itemN2 = 'dog';
+    var returnValueOfSplice = splice(array, start, deleteCount, itemN, itemN2);
+    eq(array[0], 0);
+    eq(array[1], 'cat');
+    eq(array[2], 'dog');
+    eq(array[3], 1);
+  },
+
 
 
 })
