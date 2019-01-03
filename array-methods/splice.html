@@ -66,27 +66,7 @@ function splice(array, start, deleteCount, itemN){
   var indexToStartDeleting = start;
   var itemCountToDelete = deleteCount;
 
-  if (itemN) {
-    // get the number of elements in array of itemN
-    // save this to variable called itemNCount
-    var itemNCount = arguments.length - 3;
-    // create a variable called endIndex to store end position of array
-    var moveIndex = array.length-1;
-    // beginning at moveThis, and while moveThis > start
-    // create array[moveThis + itemNCount] = moveThis
-    // decrement moveThis
-    for (moveIndex; moveIndex >= start; moveIndex--) {
-      array[moveIndex + itemNCount] = array[moveIndex]
-    }
 
-    // inserts each of itemN into the array at start index
-    var currentItemIndex = 3; // first itemN is the 3rd element of the arguments array
-    for (start; start < itemNCount; start++) {
-      array[start] = arguments[currentItemIndex];
-      currentItemIndex++;
-    }
-
-  }
 
   if (start === undefined) {
     return deletedItems;
@@ -113,16 +93,34 @@ function splice(array, start, deleteCount, itemN){
     itemCountToDelete = length;
   }
 
-  if (itemCountToDelete === 0) {
-    return deletedItems;
-  }
-
   if (itemCountToDelete < 0) {
     return deletedItems;
   }
 
   for (var i = indexToStartDeleting; i < itemCountToDelete; i++) {
     deletedItems.push(array[i]);
+  }
+
+  if (itemN) {
+    // get the number of elements in array of itemN
+    // save this to variable called itemNCount
+    var itemNCount = arguments.length - 3;
+    // create a variable called endIndex to store end position of array
+    var moveIndex = array.length-1;
+    // beginning at moveThis, and while moveThis > start
+    // create array[moveThis + itemNCount] = moveThis
+    // decrement moveThis
+    for (moveIndex; moveIndex >= start; moveIndex--) {
+      array[moveIndex + itemNCount] = array[moveIndex]
+    }
+
+    // inserts each of itemN into the array at start index
+    var currentItemIndex = 3; // first itemN is the 3rd element of the arguments array
+    for (start; start <= itemNCount && arguments[currentItemIndex] != undefined; start++) {
+      array[start] = arguments[currentItemIndex];
+      currentItemIndex++;
+    }
+
   }
 
   return deletedItems;
@@ -231,6 +229,7 @@ tests({
     var deleteCount = 1;
     var returnValueOfSplice = splice(array, start, deleteCount);
     eq(returnValueOfSplice.length, 1);
+    eq(returnValueOfSplice[0], 0);
   },
 
   'If no elements are removed, an empty array should be returned.':function(){
@@ -239,6 +238,7 @@ tests({
     var deleteCount = 0;
     var returnValueOfSplice = splice(array, start, deleteCount);
     eq(returnValueOfSplice.length, 0);
+    eq(returnValueOfSplice[0], undefined);
   },
 
   'If itemN is undefined, only elements will be removed from the array.':function(){
@@ -248,6 +248,7 @@ tests({
     var itemN = undefined;
     var returnValueOfSplice = splice(array, start, deleteCount);
     eq(returnValueOfSplice.length, 1);
+    eq(returnValueOfSplice[0], 0);
   },
 
   'If itemN is defined, it should be added to the array at start.':function(){
@@ -256,6 +257,7 @@ tests({
     var deleteCount = 0;
     var itemN = 'cat';
     var returnValueOfSplice = splice(array, start, deleteCount, itemN);
+    eq(returnValueOfSplice[0], undefined);
     eq(array[0], 'cat');
     eq(array[1], 0);
     eq(array[2], 1);
@@ -268,6 +270,7 @@ tests({
     var itemN = 'cat';
     var itemN2 = 'dog';
     var returnValueOfSplice = splice(array, start, deleteCount, itemN, itemN2);
+    eq(returnValueOfSplice[0], undefined);
     eq(array[0], 'cat');
     eq(array[1], 'dog');
     eq(array[2], 0);
@@ -281,6 +284,7 @@ tests({
     var itemN = 'cat';
     var itemN2 = 'dog';
     var returnValueOfSplice = splice(array, start, deleteCount, itemN, itemN2);
+    eq(returnValueOfSplice[0], 0);
     eq(array[0], 'cat');
     eq(array[1], 'dog');
     eq(array[3], 1);
@@ -293,13 +297,26 @@ tests({
     var itemN = 'cat';
     var itemN2 = 'dog';
     var returnValueOfSplice = splice(array, start, deleteCount, itemN, itemN2);
+    eq(returnValueOfSplice[0], undefined);
     eq(array[0], 0);
     eq(array[1], 'cat');
     eq(array[2], 'dog');
     eq(array[3], 1);
   },
 
-  // need to check that the returnValueofSplice returns the correct deleted items for those tests that have a deleteCount
+  'If itemN is more than 1 elements, a start is defined, and a deleteCount is defined then it should splice properly.':function(){
+    var array = [0,1];
+    var start = 1;
+    var deleteCount = 1;
+    var itemN = 'cat';
+    var itemN2 = 'dog';
+    var returnValueOfSplice = splice(array, start, deleteCount, itemN, itemN2);
+    eq(returnValueOfSplice[0], 1);
+    eq(array[0], 0);
+    eq(array[1], 'cat');
+    eq(array[2], 'dog');
+  }
+
   // need to test if multiple values for itemN, start, and deleteCount are all provided.
 
 
