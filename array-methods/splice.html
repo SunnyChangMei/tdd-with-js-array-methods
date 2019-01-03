@@ -97,6 +97,12 @@ function splice(array, start, deleteCount, itemN){
     return deletedItems;
   }
 
+  if (arguments.length > 3 && indexToStartDeleting && itemCountToDelete ) {
+    for (var i = indexToStartDeleting; i <= itemCountToDelete; i++) {
+      deletedItems.push(array[i]);
+    }
+  }
+
   for (var i = indexToStartDeleting; i < itemCountToDelete; i++) {
     deletedItems.push(array[i]);
   }
@@ -316,11 +322,6 @@ tests({
     eq(array[1], 'cat');
     eq(array[2], 'dog');
   }
-
-  // need to test if multiple values for itemN, start, and deleteCount are all provided.
-
-
-
 
 })
 
