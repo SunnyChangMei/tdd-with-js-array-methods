@@ -68,5 +68,5 @@ For example, to add debugger to the first test of my findIndex method:
 - [x] Array.prototype.fill()
 - [x] Array.prototype.reverse()
 - [x] Array.prototype.copyWithin()
-- [ ] Array.prototype.sort()
-- [ ] Array.prototype.splice()
+- [x] Array.prototype.sort()
+- [x] Array.prototype.splice()
